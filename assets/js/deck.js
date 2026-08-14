@@ -100,7 +100,7 @@
     var dots = document.createElement("nav");
     dots.className = "deck-dots";
     dots.setAttribute("aria-label", "페이지 이동");
-    var names = ["작품", "전시", "작가"];
+    var names = ["작품", "기획글", "전시", "작가"];
     pages.forEach(function (pg, i) {
       var b = document.createElement("button");
       b.type = "button";
@@ -133,6 +133,15 @@
   window.addEventListener("wheel", function (e) {
     if (!isDesktop() || reduced) return;
     if (document.querySelector("dialog[open]")) return;
+
+    /* 뷰포트보다 긴 면(기획글)은 그 안에서 네이티브 스크롤을 허용한다 */
+    var cur = pages[current];
+    if (cur && cur.offsetHeight > window.innerHeight + 4) {
+      var rc = cur.getBoundingClientRect();
+      if (e.deltaY > 0 && rc.bottom > window.innerHeight + 4) return;
+      if (e.deltaY < 0 && rc.top < -4) return;
+    }
+
     e.preventDefault();
     var fresh = (e.timeStamp - lastWheelT) > 90; /* 새 제스처 판정 */
     lastWheelT = e.timeStamp;
@@ -151,6 +160,29 @@
     else if (e.key === "Home") { e.preventDefault(); flipTo(0); }
     else if (e.key === "End") { e.preventDefault(); flipTo(pages.length - 1); }
   });
+
+  /* ── 기획글 모달 (아래 → 위) ────────────── */
+  (function noteSheet() {
+    var dlg = document.getElementById("notedlg");
+    var src = document.querySelector(".note-body");
+    var slot = dlg && dlg.querySelector("[data-note-clone]");
+    if (!dlg || !src || !slot || typeof dlg.showModal !== "function") return;
+
+    slot.innerHTML = src.innerHTML;   /* 기획글 면의 본문을 그대로 복제 */
+
+    var open = function () { dlg.showModal(); slot.scrollTop = 0; };
+    var close = function () {
+      if (reduced) { dlg.close(); return; }
+      dlg.classList.add("closing");
+      setTimeout(function () { dlg.close(); dlg.classList.remove("closing"); }, 380);
+    };
+
+    document.querySelectorAll("[data-note-open]").forEach(function (b) { b.addEventListener("click", open); });
+    var x = dlg.querySelector("[data-note-close]");
+    if (x) x.addEventListener("click", close);
+    dlg.addEventListener("click", function (e) { if (e.target === dlg) close(); });
+    dlg.addEventListener("cancel", function (e) { e.preventDefault(); close(); });
+  })();
 
   /* ── 포스터 확대 ────────────────────────── */
   (function zoom() {
