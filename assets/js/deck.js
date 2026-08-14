@@ -13,19 +13,32 @@
   var pages = Array.prototype.slice.call(document.querySelectorAll(".pg"));
   if (!pages.length) return;
 
-  /* ── 등장(리빌) — 1회만 ─────────────────── */
+  /* ── 등장(리빌) — 1회만 ───────────────────
+     콘텐츠가 안 보이는 사고를 막는 게 최우선이다:
+     · 첫 화면 안에 있는 요소는 관찰하지 않고 즉시 노출
+     · 관찰 대상도 1.2초 뒤에는 무조건 노출(안전장치) */
   (function reveal() {
-    var els = document.querySelectorAll(".r");
-    if (!("IntersectionObserver" in window)) {
-      els.forEach(function (el) { el.classList.add("in"); });
-      return;
-    }
+    var els = Array.prototype.slice.call(document.querySelectorAll(".r"));
+    var show = function (el) { el.classList.add("in"); };
+
+    if (!("IntersectionObserver" in window)) { els.forEach(show); return; }
+
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var pending = [];
+    els.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < vh && r.bottom > 0) show(el);   /* 첫 화면에 걸치면 즉시 */
+      else pending.push(el);
+    });
+
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+        if (e.isIntersecting) { show(e.target); io.unobserve(e.target); }
       });
-    }, { threshold: 0.1, rootMargin: "0px 0px -4% 0px" });
-    els.forEach(function (el) { io.observe(el); });
+    }, { threshold: 0 });
+    pending.forEach(function (el) { io.observe(el); });
+
+    setTimeout(function () { els.forEach(show); }, 1200);  /* 안전장치 */
   })();
 
   /* ── 페이지 인디케이터 ──────────────────── */
