@@ -199,8 +199,8 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
   margin-top: clamp(26px, 4.2vh, 44px);   /* 캡션과 2줄 간격 */
 }
 .wn-ko {
-  flex: 1 1 200px;
-  font-size: clamp(13px, 3.5vw, 16px);
+  flex: 1 1 240px;
+  font-size: clamp(14px, 3.8vw, 40px);
   font-weight: 600;
   color: var(--ink-soft);
   line-height: 1.5;
@@ -212,7 +212,7 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
 .note-btn {
   flex: 0 0 auto;
   font-family: var(--font-body);
-  font-size: clamp(12px, 3.2vw, 14px);
+  font-size: clamp(13px, 3.4vw, 35px);
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--ink);
@@ -261,7 +261,7 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
 }
 
 /* 한 줄 캡션 (미술관 표기 관례) — 작품 사진과 동급의 주요소 */
-.w-cap .label { margin-bottom: 2px; }
+.w-cap .label { margin-bottom: 6px; font-size: clamp(13px, 3.1vw, 27px); letter-spacing: 0.24em; }
 .w-cap {
   display: grid;
   gap: 5px;
@@ -271,16 +271,16 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
 .cap-ko .nb { white-space: nowrap; }
 .cap-ko {
   overflow-wrap: normal;      /* 흙·잔디 같은 항목이 쪼개지지 않게 */
-  font-size: clamp(16px, 4.7vw, 24px);
+  font-size: clamp(19px, 5.6vw, 60px);
   font-weight: 700;
-  line-height: 1.38;
+  line-height: 1.3;
   letter-spacing: -0.03em;
   text-wrap: pretty;
 }
 @media (max-width: 360px) { .cap-ko .nb { white-space: normal; } }
 .cap-en {
   overflow-wrap: normal;
-  font-size: clamp(11px, 2.9vw, 13.5px);
+  font-size: clamp(12.5px, 3.3vw, 34px);
   color: var(--muted);
   line-height: 1.45;
   letter-spacing: -0.01em;
@@ -596,6 +596,16 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
 
 @media (prefers-reduced-motion: reduce) {
   .sheetdlg[open] .sd-inner, .sheetdlg.closing .sd-inner { animation: none; }
+}
+
+
+/* 태블릿~세로형 큰 창: 사진 아래 정보를 기존 대비 2.5배로 (모바일은 위 clamp 유지) */
+@media (min-width: 600px) and (max-aspect-ratio: 1/1) {
+  .w-cap .label { font-size: min(4.1vw, 27px); }
+  .cap-ko  { font-size: min(9.1vw, 60px); }
+  .cap-en  { font-size: min(5.15vw, 34px); }
+  .wn-ko   { font-size: min(6.06vw, 40px); }
+  .note-btn { font-size: min(5.3vw, 35px); }
 }
 
 /* ── 확대 보기 ─────────────────────────────── */
