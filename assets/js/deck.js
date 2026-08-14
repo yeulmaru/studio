@@ -170,14 +170,31 @@
 
     slot.innerHTML = src.innerHTML;   /* 기획글 면의 본문을 그대로 복제 */
 
-    var open = function () { dlg.showModal(); slot.scrollTop = 0; };
+    var open = function () {
+      slot.scrollTop = 0;
+      dlg.classList.add("opening");
+      dlg.showModal();
+      /* 첫 프레임에서 레이아웃이 끝난 뒤 애니메이션이 돌도록 한 틱 양보 */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          setTimeout(function () { dlg.classList.remove("opening"); }, 640);
+        });
+      });
+    };
     var close = function () {
       if (reduced) { dlg.close(); return; }
       dlg.classList.add("closing");
-      setTimeout(function () { dlg.close(); dlg.classList.remove("closing"); }, 380);
+      setTimeout(function () { dlg.close(); dlg.classList.remove("closing"); }, 420);
     };
 
-    document.querySelectorAll("[data-note-open]").forEach(function (b) { b.addEventListener("click", open); });
+    document.querySelectorAll("[data-note-open]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        /* 클릭 순간 색 반전 플래시 */
+        btn.classList.add("is-hit");
+        setTimeout(function () { btn.classList.remove("is-hit"); }, 180);
+        open();
+      });
+    });
     var x = dlg.querySelector("[data-note-close]");
     if (x) x.addEventListener("click", close);
     dlg.addEventListener("click", function (e) { if (e.target === dlg) close(); });

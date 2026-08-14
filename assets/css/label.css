@@ -83,6 +83,23 @@ body {
 }
 @media (prefers-color-scheme: dark) { .grain { mix-blend-mode: screen; opacity: 0.045; } }
 
+/* ── 상단 페이드 ───────────────────────────── */
+.topfade {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: clamp(86px, 14vh, 150px);
+  z-index: calc(var(--z-head) - 1);
+  pointer-events: none;
+  opacity: 0.58;
+  background: linear-gradient(
+    to bottom,
+    var(--paper) 0%,
+    var(--paper) 14%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+@media (prefers-color-scheme: dark) { .topfade { opacity: 0.85; } }
+
 /* ── 좌상단 고정 전시 타이틀 ────────────────── */
 .fixhead {
   position: fixed;
@@ -224,6 +241,17 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
 .note-btn .nb-bracket { color: var(--muted); padding-inline: 1px; }
 .note-btn:hover { border-color: var(--ink); }
 .note-btn:hover .nb-bracket { color: var(--ink); }
+
+/* 누르는 순간 잉크↔종이 반전 */
+.note-btn:active,
+.note-btn.is-hit {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.note-btn:active .nb-bracket,
+.note-btn.is-hit .nb-bracket { color: var(--paper); }
+.note-btn.is-hit { transition: none; }
 .wn-en {
   font-size: clamp(12px, 3.4vw, 17px);
   line-height: 1.05;
@@ -458,11 +486,12 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
 }
 .foot-copy {
   font-family: var(--font-label);
-  font-size: clamp(10.5px, 2.8vw, 11.5px);
-  letter-spacing: var(--ls-label-tight);
+  font-size: clamp(6.3px, 1.7vw, 6.9px);   /* 기존 대비 60% */
+  letter-spacing: 0.13em;
   text-transform: uppercase;
   color: var(--muted);
-  line-height: 1.5;
+  line-height: 1.6;
+  white-space: nowrap;                      /* 한 줄 고정 */
   overflow-wrap: normal;
 }
 
@@ -533,13 +562,26 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
   border-top-left-radius: var(--radius-card);
   border-top-right-radius: var(--radius-card);
   overflow: hidden;
+  /* 올라오는 동안 끊기지 않도록 별도 레이어로 승격 */
+  will-change: transform;
+  transform: translate3d(0, 100%, 0);
+  backface-visibility: hidden;
+  contain: layout paint;
 }
-.sheetdlg[open] .sd-inner { animation: sd-up 0.55s var(--ease-out) both; }
-.sheetdlg.closing .sd-inner { animation: sd-down 0.38s var(--ease-inout) both; }
+/* 배경 90% — 뒤가 살짝 비쳐 자연스럽게 */
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .sd-inner {
+    background: color-mix(in srgb, var(--paper) 90%, transparent);
+    -webkit-backdrop-filter: blur(20px) saturate(1.08);
+    backdrop-filter: blur(20px) saturate(1.08);
+  }
+}
+.sheetdlg[open] .sd-inner { animation: sd-up 0.62s var(--ease-out) both; }
+.sheetdlg.closing .sd-inner { animation: sd-down 0.42s var(--ease-inout) both; }
 .sheetdlg.closing::backdrop { animation: sd-fade-out 0.38s var(--ease-inout) forwards; }
 
-@keyframes sd-up { from { transform: translateY(100%); } to { transform: none; } }
-@keyframes sd-down { from { transform: none; } to { transform: translateY(100%); } }
+@keyframes sd-up   { from { transform: translate3d(0, 100%, 0); } to { transform: translate3d(0, 0, 0); } }
+@keyframes sd-down { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, 100%, 0); } }
 @keyframes sd-fade { to { opacity: 0.55; } }
 @keyframes sd-fade-out { from { opacity: 0.55; } to { opacity: 0; } }
 
@@ -576,12 +618,19 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
   transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
 .sd-close:hover { background: var(--ink); color: var(--paper); }
-.sd-close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.sd-close svg {
+  width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5;
+  transition: transform var(--dur-med) var(--ease-inout);
+}
+.sd-close:active svg { transform: rotate(90deg); }
+.sheetdlg.closing .sd-close svg { transform: rotate(180deg); }
+.sheetdlg.closing .sd-close { background: var(--ink); color: var(--paper); }
 
 .sd-body {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
+  overflow-anchor: none;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   padding: clamp(16px, 3vh, 26px) var(--pad) clamp(36px, 7vh, 64px);
@@ -593,6 +642,7 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
   text-wrap: pretty;
 }
 .sd-body p { overflow-wrap: normal; }
+.sheetdlg.opening .sd-body, .sheetdlg.closing .sd-body { overflow-y: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
   .sheetdlg[open] .sd-inner, .sheetdlg.closing .sd-inner { animation: none; }
@@ -692,6 +742,16 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; scroll-snap-type: y proximity; }
+}
+
+/* ── 2열(가로형 데스크톱): 컬럼 폭에 맞춰 캡션 상한 ── */
+@media (min-width: 901px) and (min-aspect-ratio: 1/1) {
+  .w-cap, .w-note { min-width: 0; }
+  .w-cap .label { font-size: min(27px, 1.5vw); }
+  .cap-ko   { font-size: min(60px, 3.3vw); }
+  .cap-en   { font-size: min(34px, 1.9vw); }
+  .wn-ko    { font-size: min(40px, 2.2vw); }
+  .note-btn { font-size: min(35px, 1.95vw); }
 }
 
 /* ── 인쇄 ──────────────────────────────────── */
