@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>document.documentElement.classList.add("js");</script>
+
+<title>풍경조각 : 토대를 까는 일 — 안민환</title>
+<meta name="description" content="안민환(b. 1988), 《풍경조각 : 토대를 까는 일》, 2026. 흙, 잔디. 가변설치.">
+<meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#161511" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="풍경조각 : 토대를 까는 일 — 안민환">
+<meta property="og:description" content="Landscape Sculpture: Laying the Foundation — Minhwan An, 2026. Soil, Grass. Dimensions variable.">
+<meta property="og:image" content="assets/img/poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preload" href="assets/fonts/anton/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/img/poster.webp" as="image" type="image/webp" fetchpriority="high">
+<link rel="stylesheet" href="assets/css/fonts.css">
+<link rel="stylesheet" href="assets/fonts/pretendard/pretendardvariable-dynamic-subset.css">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/label.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23141311'/><text x='50' y='69' font-size='60' font-family='Arial' font-weight='bold' fill='%23f4f1ea' text-anchor='middle'>A</text></svg>">
+</head>
+
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<main class="sheet">
+
+  <!-- ── 포스터 ───────────────────────────────── -->
+  <figure class="poster">
+    <button class="poster-btn" type="button" aria-label="포스터 크게 보기" data-zoom>
+      <picture>
+        <source srcset="assets/img/poster.webp" type="image/webp">
+        <img src="assets/img/poster.jpg"
+             width="1536" height="2048"
+             alt="안민환 《풍경조각 : 토대를 까는 일》 전시 포스터"
+             fetchpriority="high" decoding="async">
+      </picture>
+    </button>
+    <figcaption class="label label--muted poster-cap">
+      <span>POSTER</span><span aria-hidden="true">·</span><span class="hint hint--tap">탭하면 확대</span><span class="hint hint--click">클릭하면 확대</span>
+    </figcaption>
+  </figure>
+
+  <!-- ── 작품 정보 ─────────────────────────────── -->
+  <section class="info" aria-labelledby="t-en">
+
+    <p class="kicker r" data-r="1">
+      <span class="label">ARTWORK</span>
+      <span class="rule" aria-hidden="true"></span>
+      <span class="label label--muted">작품 정보</span>
+    </p>
+
+    <h1 class="display t-en r" id="t-en" data-r="2">
+      Landscape<br>Sculpture:<br><em>Laying the<br>Foundation</em>
+    </h1>
+
+    <p class="t-ko r" data-r="3" lang="ko">풍경조각 <span class="colon" aria-hidden="true">:</span> 토대를 까는 일</p>
+
+    <div class="artist r" data-r="4">
+      <p class="a-ko" lang="ko">안민환<span class="born">(b.&nbsp;1988)</span></p>
+      <p class="a-en">Minhwan An</p>
+    </div>
+
+    <dl class="spec r" data-r="5">
+
+      <div class="spec-row">
+        <dt><span class="label">YEAR</span><span class="ko" lang="ko">제작년도</span></dt>
+        <dd><span class="v">2026</span></dd>
+      </div>
+
+      <div class="spec-row">
+        <dt><span class="label">MATERIALS</span><span class="ko" lang="ko">재료</span></dt>
+        <dd><span class="v" lang="ko">흙, 잔디</span><span class="v-en">Soil, Grass</span></dd>
+      </div>
+
+      <div class="spec-row">
+        <dt><span class="label">SIZE</span><span class="ko" lang="ko">크기</span></dt>
+        <dd><span class="v" lang="ko">가변설치</span><span class="v-en">Dimensions variable</span></dd>
+      </div>
+
+    </dl>
+
+  </section>
+</main>
+
+<!-- ── 포스터 확대 ─────────────────────────────── -->
+<dialog class="zoom" id="zoom" aria-label="포스터 확대 보기">
+  <button class="zoom-close" type="button" aria-label="닫기" data-close>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+  </button>
+  <picture>
+    <source srcset="assets/img/poster.webp" type="image/webp">
+    <img src="assets/img/poster.jpg" alt="안민환 《풍경조각 : 토대를 까는 일》 전시 포스터 확대" loading="lazy" decoding="async">
+  </picture>
+</dialog>
+
+<script>
+(() => {
+  const dlg = document.getElementById('zoom');
+  if (!dlg || typeof dlg.showModal !== 'function') return;
+
+  const open = () => {
+    if (document.startViewTransition) document.startViewTransition(() => dlg.showModal());
+    else dlg.showModal();
+  };
+  const close = () => {
+    if (document.startViewTransition) document.startViewTransition(() => dlg.close());
+    else dlg.close();
+  };
+
+  document.querySelector('[data-zoom]')?.addEventListener('click', open);
+  dlg.querySelector('[data-close]')?.addEventListener('click', close);
+  dlg.addEventListener('click', e => { if (e.target === dlg) close(); });
+})();
+
+/* 등장(리빌) — 1회만, 뷰포트 진입 시 */
+(() => {
+  const els = document.querySelectorAll('.r');
+  if (!('IntersectionObserver' in window)) { els.forEach(el => el.classList.add('in')); return; }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  els.forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>
