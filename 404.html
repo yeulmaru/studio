@@ -7,13 +7,12 @@
 <title>풍경조각 : 토대를 까는 일</title>
 <style>html{background:#f4f1ea}@media(prefers-color-scheme:dark){html{background:#161511}}</style>
 <script>
-  /* 이 사이트는 단일 페이지다. 다른 경로로 들어오면 항상 라벨 페이지로 되돌린다. */
+  /* 이 사이트는 단일 페이지다. 다른 경로로 들어오면 라벨 페이지로 되돌린다. */
   (function () {
-    var seg = location.pathname.split('/').filter(Boolean);
-    var base = (location.hostname.indexOf('github.io') !== -1 && seg.length) ? '/' + seg[0] + '/' : '/';
-    location.replace(base);
+    var target = location.hostname.indexOf('github.io') !== -1 ? '/studio/' : '/';
+    if (location.pathname !== target) location.replace(target);
   })();
 </script>
 </head>
-<body><noscript><a href="/">돌아가기</a></noscript></body>
+<body><noscript><a href="/studio/">라벨 페이지로 이동</a></noscript></body>
 </html>
