@@ -18,6 +18,10 @@
   --dark-line: rgba(244, 241, 234, 0.16);
   --dark-muted: rgba(244, 241, 234, 0.55);
 
+  /* 유일한 유채색 예외 — 읽던 위치를 짚어주는 하이라이트에만 쓴다 (DESIGN.md §3 예외) */
+  --hl: #ffe14d;
+  --hl-soft: rgba(255, 225, 77, 0.42);
+
   /* ── typography ── */
   --font-display: "Anton", "Pretendard Variable", Pretendard, sans-serif;
   --font-label: "Jost", "Pretendard Variable", Pretendard, sans-serif;

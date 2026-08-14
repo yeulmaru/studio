@@ -60,6 +60,21 @@
     return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
   };
 
+  var smoothTo = function (targetY, dur, done) {
+    var from = window.scrollY;
+    var dist = targetY - from;
+    var t0 = null;
+    docEl.classList.add("snap-off");
+    var step = function (t) {
+      if (t0 === null) t0 = t;
+      var p = Math.min(1, (t - t0) / dur);
+      window.scrollTo(0, from + dist * easeInOutCubic(p));
+      if (p < 1) requestAnimationFrame(step);
+      else { docEl.classList.remove("snap-off"); if (done) done(); }
+    };
+    requestAnimationFrame(step);
+  };
+
   var flipTo = function (i) {
     i = Math.max(0, Math.min(pages.length - 1, i));
     var target = pageTop(i);
@@ -126,27 +141,153 @@
     pages.forEach(function (pg) { ioPage.observe(pg); });
   }
 
+  /* ── 02 기획글: 문단 단위로 넘기기 ─────────
+     화면에 걸친 "마지막 문단"을 그때그때 계산해서 타이틀 바로 아래로 올린다.
+     폰 크기에 따라 그 문단이 3번째든 4번째든 실측으로 판별한다. */
+  var notePage = (function () {
+    var sec = document.getElementById("p2");
+    if (!sec) return { next: function () { return false; }, prev: function () { return false; }, atEnd: function () { return true; }, atStart: function () { return true; } };
+
+    var paras = Array.prototype.slice.call(sec.querySelectorAll(".note-body p"));
+    var head = sec.querySelector(".note-head");
+    var body = sec.querySelector(".note-body");
+    var busy = false;
+
+    var headH = function () { return head ? head.getBoundingClientRect().height : 0; };
+
+    /* 마지막 문단도 화면 맨 위까지 올라올 수 있게 본문 뒤에 여백을 만든다 */
+    var spacer = null;
+    if (body && paras.length) {
+      spacer = document.createElement("div");
+      spacer.setAttribute("aria-hidden", "true");
+      spacer.className = "note-spacer";
+      body.appendChild(spacer);
+    }
+    var sizeSpacer = function () {
+      if (!spacer) return;
+      var last = paras[paras.length - 1];
+      var need = window.innerHeight - headH() - last.offsetHeight - 48;
+      spacer.style.height = Math.max(0, Math.round(need)) + "px";
+    };
+    sizeSpacer();
+    window.addEventListener("resize", function () { clearTimeout(spacer && spacer._t); if (spacer) spacer._t = setTimeout(sizeSpacer, 180); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizeSpacer);
+    var secTop = function () { return sec.getBoundingClientRect().top + window.scrollY; };
+
+    /* 화면에 조금이라도 걸쳐 있는 문단 중 마지막 것 */
+    var lastVisible = function () {
+      var vh = window.innerHeight, top = headH(), found = null;
+      paras.forEach(function (p) {
+        var r = p.getBoundingClientRect();
+        if (r.top < vh - 6 && r.bottom > top + 6) found = p;
+      });
+      return found;
+    };
+    var firstVisible = function () {
+      var vh = window.innerHeight, top = headH();
+      for (var i = 0; i < paras.length; i++) {
+        var r = paras[i].getBoundingClientRect();
+        if (r.top < vh - 6 && r.bottom > top + 6) return paras[i];
+      }
+      return null;
+    };
+
+    var scrollToPara = function (p) {
+      busy = true;
+      p.classList.add("is-mark");
+      var y = p.getBoundingClientRect().top + window.scrollY - headH() - 12;
+      var maxY = secTop() + sec.offsetHeight - window.innerHeight;
+      y = Math.max(secTop(), Math.min(y, maxY));
+      smoothTo(y, 820, function () {
+        setTimeout(function () { p.classList.remove("is-mark"); busy = false; }, 280);
+      });
+    };
+
+    var atEnd = function () {
+      var r = sec.getBoundingClientRect();
+      return r.bottom <= window.innerHeight + 6;
+    };
+    var atStart = function () {
+      return sec.getBoundingClientRect().top >= -6;
+    };
+
+    return {
+      atEnd: atEnd,
+      atStart: atStart,
+      next: function () {
+        if (busy) return true;
+        if (atEnd()) return false;              /* 다 읽었으면 다음 면으로 */
+        var p = lastVisible();
+        if (!p) return false;
+        var r = p.getBoundingClientRect();
+        if (Math.abs(r.top - headH() - 12) < 8) {   /* 이미 맨 위면 그 다음 문단 */
+          var i = paras.indexOf(p);
+          if (i >= paras.length - 1) return false;
+          p = paras[i + 1];
+        }
+        scrollToPara(p);
+        return true;
+      },
+      prev: function () {
+        if (busy) return true;
+        if (atStart()) return false;
+        var p = firstVisible();
+        if (!p) return false;
+        var i = paras.indexOf(p);
+        var r = p.getBoundingClientRect();
+        if (Math.abs(r.top - headH() - 12) < 8) i -= 1;
+        if (i < 0) { smoothTo(secTop(), 760, function () {}); return true; }
+        scrollToPara(paras[i]);
+        return true;
+      },
+      /* 모바일: 손을 뗀 뒤 가장 가까운 문단 경계로 정렬 */
+      settle: function () {
+        if (busy || atEnd() || atStart()) return;
+        var top = headH() + 12, best = null, bestD = 1e9;
+        paras.forEach(function (p) {
+          var d = Math.abs(p.getBoundingClientRect().top - top);
+          if (d < bestD) { bestD = d; best = p; }
+        });
+        if (best && bestD > 6 && bestD < window.innerHeight * 0.62) scrollToPara(best);
+      }
+    };
+  })();
+
+  /* 모바일: 스와이프가 끝나면 문단 경계로 정렬 */
+  var settleT = null;
+  window.addEventListener("scroll", function () {
+    if (isDesktop() || current !== 1) return;
+    clearTimeout(settleT);
+    settleT = setTimeout(function () { notePage.settle(); }, 180);
+  }, { passive: true });
+
   /* ── 휠: 제스처 1회 = 1페이지 (데스크톱) ─── */
   var isDesktop = function () { return window.matchMedia("(min-width: 901px) and (min-aspect-ratio: 1/1)").matches; };
   var lastWheelT = -1000;
 
   window.addEventListener("wheel", function (e) {
-    if (!isDesktop() || reduced) return;
+    if (reduced) return;
     if (document.querySelector("dialog[open]")) return;
+    if (Math.abs(e.deltaY) < 4) return;
 
-    /* 뷰포트보다 긴 면(기획글)은 그 안에서 네이티브 스크롤을 허용한다 */
-    var cur = pages[current];
-    if (cur && cur.offsetHeight > window.innerHeight + 4) {
-      var rc = cur.getBoundingClientRect();
-      if (e.deltaY > 0 && rc.bottom > window.innerHeight + 4) return;
-      if (e.deltaY < 0 && rc.top < -4) return;
+    var fresh = (e.timeStamp - lastWheelT) > 90; /* 새 제스처 판정 */
+
+    /* 02 기획글 — 화면비와 무관하게 문단 단위로 넘긴다 */
+    if (current === 1) {
+      lastWheelT = e.timeStamp;
+      if (flipping) { e.preventDefault(); return; }
+      if (!fresh) { e.preventDefault(); return; }
+      if (e.deltaY > 0 ? notePage.next() : notePage.prev()) { e.preventDefault(); return; }
+      /* 문단을 다 봤으면 다음/이전 면으로 */
+      e.preventDefault();
+      flipTo(current + (e.deltaY > 0 ? 1 : -1));
+      return;
     }
 
+    if (!isDesktop()) return;
     e.preventDefault();
-    var fresh = (e.timeStamp - lastWheelT) > 90; /* 새 제스처 판정 */
     lastWheelT = e.timeStamp;
     if (flipping || !fresh) return;
-    if (Math.abs(e.deltaY) < 4) return;
     flipTo(current + (e.deltaY > 0 ? 1 : -1));
   }, { passive: false });
 
@@ -161,44 +302,22 @@
     else if (e.key === "End") { e.preventDefault(); flipTo(pages.length - 1); }
   });
 
-  /* ── 기획글 모달 (아래 → 위) ────────────── */
-  (function noteSheet() {
-    var dlg = document.getElementById("notedlg");
-    var src = document.querySelector(".note-body");
-    var slot = dlg && dlg.querySelector("[data-note-clone]");
-    if (!dlg || !src || !slot || typeof dlg.showModal !== "function") return;
-
-    slot.innerHTML = src.innerHTML;   /* 기획글 면의 본문을 그대로 복제 */
-
-    var open = function () {
-      slot.scrollTop = 0;
-      dlg.classList.add("opening");
-      dlg.showModal();
-      /* 첫 프레임에서 레이아웃이 끝난 뒤 애니메이션이 돌도록 한 틱 양보 */
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
-          setTimeout(function () { dlg.classList.remove("opening"); }, 640);
-        });
-      });
-    };
-    var close = function () {
-      if (reduced) { dlg.close(); return; }
-      dlg.classList.add("closing");
-      setTimeout(function () { dlg.close(); dlg.classList.remove("closing"); }, 420);
-    };
-
-    document.querySelectorAll("[data-note-open]").forEach(function (btn) {
+  /* ── [기획글 보기] → 노란불 켜고 02면으로 ── */
+  (function noteGo() {
+    var sec = document.getElementById("p2");
+    if (!sec) return;
+    document.querySelectorAll("[data-note-go]").forEach(function (btn) {
       btn.addEventListener("click", function () {
-        /* 클릭 순간 색 반전 플래시 */
-        btn.classList.add("is-hit");
-        setTimeout(function () { btn.classList.remove("is-hit"); }, 180);
-        open();
+        btn.classList.add("is-go");          /* 버튼 노란불 */
+        sec.classList.add("is-loading");     /* 도착지 타이틀도 노란불 */
+        flipTo(1);
+        var hold = reduced ? 120 : 1240;     /* 플립(0.9s) + 안착 여유 */
+        setTimeout(function () {
+          btn.classList.remove("is-go");
+          sec.classList.remove("is-loading");
+        }, hold);
       });
     });
-    var x = dlg.querySelector("[data-note-close]");
-    if (x) x.addEventListener("click", close);
-    dlg.addEventListener("click", function (e) { if (e.target === dlg) close(); });
-    dlg.addEventListener("cancel", function (e) { e.preventDefault(); close(); });
   })();
 
   /* ── 포스터 확대 ────────────────────────── */
