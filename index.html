@@ -6,18 +6,18 @@
 <script>document.documentElement.classList.add("js");</script>
 
 <title>풍경조각 : 토대를 까는 일 — 안민환</title>
-<meta name="description" content="안민환(b. 1988), 《풍경조각 : 토대를 까는 일》, 2026. 흙, 잔디. 가변설치.">
+<meta name="description" content="안민환, 〈풍경조각 : 토대를 까는 일〉, 2026, 흙·잔디, 가변설치. GS칼텍스 예울마루 창작스튜디오 7기 입주작가전.">
 <meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#161511" media="(prefers-color-scheme: dark)">
 
 <meta property="og:type" content="article">
 <meta property="og:title" content="풍경조각 : 토대를 까는 일 — 안민환">
-<meta property="og:description" content="Landscape Sculpture: Laying the Foundation — Minhwan An, 2026. Soil, Grass. Dimensions variable.">
-<meta property="og:image" content="assets/img/poster.jpg">
+<meta property="og:description" content="Minhwan An, Landscape Sculpture: Laying the Foundation, 2026, soil and grass, dimensions variable.">
+<meta property="og:image" content="assets/img/work.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="preload" href="assets/fonts/anton/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/img/poster.webp" as="image" type="image/webp" fetchpriority="high">
+<link rel="preload" href="assets/img/work.webp" as="image" type="image/webp" fetchpriority="high">
 <link rel="stylesheet" href="assets/css/fonts.css">
 <link rel="stylesheet" href="assets/fonts/pretendard/pretendardvariable-dynamic-subset.css">
 <link rel="stylesheet" href="assets/css/tokens.css">
@@ -25,67 +25,126 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23141311'/><text x='50' y='69' font-size='60' font-family='Arial' font-weight='bold' fill='%23f4f1ea' text-anchor='middle'>A</text></svg>">
 </head>
 
-<body>
+<body class="book">
 <div class="grain" aria-hidden="true"></div>
 
-<main class="sheet">
+<!-- ── 좌상단 고정: 전시 타이틀 ───────────────── -->
+<header class="fixhead">
+  <p class="fh-ko">풍경조각 <span aria-hidden="true">:</span> 토대를 까는 일</p>
+  <p class="fh-en">Landscape Sculpture</p>
+</header>
 
-  <!-- ── 포스터 ───────────────────────────────── -->
-  <figure class="poster">
-    <button class="poster-btn" type="button" aria-label="포스터 크게 보기" data-zoom>
-      <picture>
-        <source srcset="assets/img/poster.webp" type="image/webp">
-        <img src="assets/img/poster.jpg"
-             width="1536" height="2048"
-             alt="안민환 《풍경조각 : 토대를 까는 일》 전시 포스터"
-             fetchpriority="high" decoding="async">
-      </picture>
-    </button>
-    <figcaption class="label label--muted poster-cap">
-      <span>POSTER</span><span aria-hidden="true">·</span><span class="hint hint--tap">탭하면 확대</span><span class="hint hint--click">클릭하면 확대</span>
-    </figcaption>
-  </figure>
+<main class="deck">
 
-  <!-- ── 작품 정보 ─────────────────────────────── -->
-  <section class="info" aria-labelledby="t-en">
+  <!-- ══ 01 · 작품 ═══════════════════════════ -->
+  <section class="pg pg--work" id="p1" aria-labelledby="t-work">
 
-    <p class="kicker r" data-r="1">
-      <span class="label">ARTWORK</span>
-      <span class="rule" aria-hidden="true"></span>
-      <span class="label label--muted">작품 정보</span>
-    </p>
-
-    <h1 class="display t-en r" id="t-en" data-r="2">
-      Landscape<br>Sculpture:<br><em>Laying the<br>Foundation</em>
-    </h1>
-
-    <p class="t-ko r" data-r="3" lang="ko">풍경조각 <span class="colon" aria-hidden="true">:</span> 토대를 까는 일</p>
-
-    <div class="artist r" data-r="4">
-      <p class="a-ko" lang="ko">안민환<span class="born">(b.&nbsp;1988)</span></p>
-      <p class="a-en">Minhwan An</p>
+    <div class="w-head r">
+      <p class="label label--muted">01 — Artwork</p>
+      <h1 class="display w-title" id="t-work">Landscape&nbsp;Sculpture:<br><em>Laying the Foundation</em></h1>
+      <p class="w-ko" lang="ko">풍경조각 <span class="colon" aria-hidden="true">:</span> 토대를 까는 일</p>
+      <p class="w-artist"><span lang="ko">안민환</span><span class="sep" aria-hidden="true">/</span><span class="en">Minhwan An</span></p>
     </div>
 
-    <dl class="spec r" data-r="5">
+    <div class="w-note r">
+      <p class="wn-ko" lang="ko">땅의 표면을 들어 올려, 풍경이 딛고 있던 토대를 드러낸다.</p>
+      <p class="wn-en display">Lifting the surface to reveal the foundation beneath</p>
+    </div>
 
-      <div class="spec-row">
-        <dt><span class="label">YEAR</span><span class="ko" lang="ko">제작년도</span></dt>
-        <dd><span class="v">2026</span></dd>
-      </div>
+    <figure class="w-photo r">
+      <picture>
+        <source srcset="assets/img/work.webp" type="image/webp">
+        <img src="assets/img/work.jpg" width="3000" height="4000"
+             alt="잔디밭의 흙과 잔디 층을 들어 올려 흰 기둥으로 받쳐 세운 안민환의 야외 설치 작품"
+             fetchpriority="high" decoding="async">
+      </picture>
+    </figure>
 
-      <div class="spec-row">
-        <dt><span class="label">MATERIALS</span><span class="ko" lang="ko">재료</span></dt>
-        <dd><span class="v" lang="ko">흙, 잔디</span><span class="v-en">Soil, Grass</span></dd>
-      </div>
-
-      <div class="spec-row">
-        <dt><span class="label">SIZE</span><span class="ko" lang="ko">크기</span></dt>
-        <dd><span class="v" lang="ko">가변설치</span><span class="v-en">Dimensions variable</span></dd>
-      </div>
-
-    </dl>
+    <figcaption class="w-cap r">
+      <p class="cap-ko" lang="ko">안민환, 〈풍경조각 : 토대를 까는 일〉, 2026, 흙·잔디, 가변설치</p>
+      <p class="cap-en">Minhwan An, <em>Landscape Sculpture: Laying the Foundation</em>, 2026, soil and grass, dimensions variable</p>
+    </figcaption>
 
   </section>
+
+  <!-- ══ 02 · 전시 ═══════════════════════════ -->
+  <section class="pg pg--exh" id="p2" aria-labelledby="t-exh">
+
+    <p class="label label--muted r">02 — Exhibition</p>
+
+    <div class="exh-body">
+      <figure class="e-poster r">
+        <button class="poster-btn" type="button" aria-label="포스터 크게 보기" data-zoom>
+          <picture>
+            <source srcset="assets/img/poster.webp" type="image/webp">
+            <img src="assets/img/poster.jpg" width="1536" height="2048"
+                 alt="전시 포스터 — 풍경조각 : 토대를 까는 일" loading="lazy" decoding="async">
+          </picture>
+        </button>
+      </figure>
+
+      <div class="e-info">
+        <h2 class="display e-title" id="t-exh">GS Caltex<br>Yeulmaru<br><em>Creative Studio</em></h2>
+        <p class="e-ko" lang="ko">GS칼텍스 예울마루 창작스튜디오<br>7기 입주작가전</p>
+
+        <dl class="spec r">
+          <div class="spec-row">
+            <dt><span class="label">Period</span><span class="ko" lang="ko">기간</span></dt>
+            <dd><span class="v">2026. 08. 25 — 10. 25</span><span class="v-en">Tue — Sun</span></dd>
+          </div>
+          <div class="spec-row">
+            <dt><span class="label">Venue</span><span class="ko" lang="ko">장소</span></dt>
+            <dd><span class="v" lang="ko">GS칼텍스 예울마루, 장도 잔디광장</span><span class="v-en">Jangdo Lawn Square, Yeosu</span></dd>
+          </div>
+        </dl>
+
+        <p class="e-keys" aria-label="키워드">
+          <span>Foundation</span><span>Landscape</span><span>Body</span><span>Time</span>
+        </p>
+      </div>
+    </div>
+
+    <p class="hint r"><span class="hint--tap">포스터를 탭하면 확대</span><span class="hint--click">포스터를 클릭하면 확대</span></p>
+  </section>
+
+  <!-- ══ 03 · 작가 ═══════════════════════════ -->
+  <section class="pg pg--artist" id="p3" aria-labelledby="t-artist">
+
+    <p class="label label--muted r">03 — Artist</p>
+
+    <div class="a-body">
+      <figure class="a-photo r">
+        <picture>
+          <source srcset="assets/img/artist.webp" type="image/webp">
+          <img src="assets/img/artist.jpg" width="1333" height="2000"
+               alt="작가 안민환" loading="lazy" decoding="async">
+        </picture>
+      </figure>
+
+      <div class="a-info">
+        <h2 class="display a-name" id="t-artist">Minhwan&nbsp;An</h2>
+        <p class="a-ko" lang="ko">안민환<span class="born">b.&nbsp;1988 · 조각</span></p>
+        <p class="a-stmt" lang="ko">조각을 통해 신체와 풍경의 관계, 확장되는 공간성을 탐구한다.</p>
+        <ul class="a-cv" lang="ko">
+          <li>개인전 《CUT—OUT》(2024) 외 3회</li>
+          <li>신한갤러리(2024) · 문래예술공장(2023) 그룹전</li>
+          <li>울산북구예술창작소(2018) · 모하창작스튜디오(2017) 레지던시</li>
+        </ul>
+      </div>
+    </div>
+
+    <footer class="site-foot">
+      <div class="foot-grid">
+        <p class="wordmark">CREATIVE<span>.</span></p>
+        <p class="label label--muted">Creative Studio — Residency Archive</p>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2026 CREATIVE STUDIO</span>
+        <span class="label label--muted">Cohort 07 — Artwork Label</span>
+      </div>
+    </footer>
+  </section>
+
 </main>
 
 <!-- ── 포스터 확대 ─────────────────────────────── -->
@@ -95,38 +154,10 @@
   </button>
   <picture>
     <source srcset="assets/img/poster.webp" type="image/webp">
-    <img src="assets/img/poster.jpg" alt="안민환 《풍경조각 : 토대를 까는 일》 전시 포스터 확대" loading="lazy" decoding="async">
+    <img src="assets/img/poster.jpg" alt="전시 포스터 확대" loading="lazy" decoding="async">
   </picture>
 </dialog>
 
-<script>
-(() => {
-  const dlg = document.getElementById('zoom');
-  if (!dlg || typeof dlg.showModal !== 'function') return;
-
-  const open = () => {
-    if (document.startViewTransition) document.startViewTransition(() => dlg.showModal());
-    else dlg.showModal();
-  };
-  const close = () => {
-    if (document.startViewTransition) document.startViewTransition(() => dlg.close());
-    else dlg.close();
-  };
-
-  document.querySelector('[data-zoom]')?.addEventListener('click', open);
-  dlg.querySelector('[data-close]')?.addEventListener('click', close);
-  dlg.addEventListener('click', e => { if (e.target === dlg) close(); });
-})();
-
-/* 등장(리빌) — 1회만, 뷰포트 진입 시 */
-(() => {
-  const els = document.querySelectorAll('.r');
-  if (!('IntersectionObserver' in window)) { els.forEach(el => el.classList.add('in')); return; }
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
-  els.forEach(el => io.observe(el));
-})();
-</script>
+<script src="assets/js/deck.js" defer></script>
 </body>
 </html>
