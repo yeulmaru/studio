@@ -140,8 +140,8 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
 
 .pg {
   position: relative;
-  min-height: 100svh;
-  height: 100svh;              /* flex 자식이 남는 높이를 정확히 나눠 갖도록 */
+  min-height: 100dvh;
+  height: 100dvh;              /* 주소창 접힘까지 따라가 항상 화면을 꽉 채운다 */
   scroll-snap-align: start;
   scroll-snap-stop: always;
   display: flex;
@@ -542,7 +542,7 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
 /* ══ 02 · 기획글 ═════════════════════════════ */
 .pg--note {
   height: auto;                 /* 글 길이만큼 늘어난다 */
-  min-height: 100svh;
+  min-height: 100dvh;
   background: #ffffff;
   color: #141311;
   padding-bottom: clamp(48px, 8vh, 96px);
@@ -587,17 +587,13 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
   overflow-wrap: normal;
   scroll-margin-top: clamp(78px, 15vh, 150px);
   border-radius: 3px;
-  box-shadow: 0 0 0 0 transparent;
-  transition: background var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+  transition: background var(--dur-med) var(--ease-out);
 }
-/* 읽던 자리를 짚어주는 하이라이트 — 이동이 끝날 때까지 유지 */
-.note-body p.is-mark {
-  background: var(--hl-soft);
-  box-shadow: 0 0 0 6px var(--hl-soft);
-}
-.pg--note.is-loading .note-title { color: #141311; background: var(--hl); box-shadow: 0 0 0 8px var(--hl); border-radius: 2px; }
+/* 읽던 자리를 짚어주는 하이라이트 — 음영 없이 배경만 */
+.note-body p.is-mark { background: var(--hl-soft); }
+.pg--note.is-loading .note-title { color: #141311; background: var(--hl); }
 @media (prefers-color-scheme: dark) { .pg--note.is-loading .note-title { color: #141311; } }
-.note-title { transition: background var(--dur-med) var(--ease-out), color var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out); }
+.note-title { transition: background var(--dur-med) var(--ease-out), color var(--dur-med) var(--ease-out); }
 
 @media (min-width: 901px) and (min-aspect-ratio: 1/1) {
   .pg--note { justify-content: center; }
@@ -610,8 +606,8 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
 .sheetdlg {
   width: 100vw;
   max-width: 100vw;
-  height: 100svh;
-  max-height: 100svh;
+  height: 100dvh;
+  max-height: 100dvh;
   margin: 0;
   padding: 0;
   border: 0;
@@ -625,7 +621,7 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
 .sd-inner {
   position: absolute;
   inset: auto 0 0 0;
-  height: 92svh;
+  height: 92dvh;
   display: flex;
   flex-direction: column;
   background: var(--paper);
@@ -734,8 +730,8 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
 .zoom {
   width: 100vw;
   max-width: 100vw;
-  height: 100svh;
-  max-height: 100svh;
+  height: 100dvh;
+  max-height: 100dvh;
   margin: 0;
   padding: clamp(14px, 3.5vw, 48px);
   border: 0;
@@ -770,7 +766,7 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
 
 /* ── 데스크톱 ──────────────────────────────── */
 @media (min-width: 901px) and (min-aspect-ratio: 1/1) {
-  .pg { padding-inline: var(--pad); height: 100svh; }
+  .pg { padding-inline: var(--pad); height: 100dvh; }
 
   .pg--work {
     display: grid;
@@ -781,17 +777,17 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
     column-gap: var(--gap-lg);
     row-gap: clamp(12px, 2vh, 22px);
   }
-  .w-photo { grid-area: photo; margin: 0; height: min(78svh, 100%); align-self: center; }
+  .w-photo { grid-area: photo; margin: 0; height: min(78dvh, 100%); align-self: center; }
   .w-photo img { object-position: 50% 50%; }
   .w-cap  { grid-area: cap; align-self: end; }
   .w-note { grid-area: note; align-self: start; }
 
   .exh-body { flex-direction: row; align-items: center; gap: var(--gap-lg); }
-  .e-poster { flex: 0 0 40%; height: min(68svh, 720px); }
+  .e-poster { flex: 0 0 40%; height: min(68dvh, 720px); }
   .e-info { flex: 1 1 auto; align-content: center; }
 
   .a-body { flex-direction: row; align-items: center; gap: var(--gap-lg); }
-  .a-photo { flex: 0 0 38%; margin-inline: 0; height: min(62svh, 640px); }
+  .a-photo { flex: 0 0 38%; margin-inline: 0; height: min(62dvh, 640px); }
   .a-info { flex: 1 1 auto; align-content: center; }
   .a-name { font-size: min(clamp(38px, 4.4vw, 68px), 9vh); }
 }

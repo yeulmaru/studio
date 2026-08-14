@@ -216,11 +216,14 @@
       atStart: atStart,
       next: function () {
         if (busy) return true;
-        if (atEnd()) return false;              /* 다 읽었으면 다음 면으로 */
+        var lastP = paras[paras.length - 1];
+        /* 마지막 문단이 이미 맨 위에 정렬돼 있으면 곧장 다음 면으로 */
+        if (Math.abs(lastP.getBoundingClientRect().top - headH() - 12) < 26) return false;
+        if (atEnd()) return false;
         var p = lastVisible();
         if (!p) return false;
         var r = p.getBoundingClientRect();
-        if (Math.abs(r.top - headH() - 12) < 8) {   /* 이미 맨 위면 그 다음 문단 */
+        if (Math.abs(r.top - headH() - 12) < 26) {   /* 이미 맨 위면 그 다음 문단 */
           var i = paras.indexOf(p);
           if (i >= paras.length - 1) return false;
           p = paras[i + 1];
@@ -243,6 +246,8 @@
       /* 모바일: 손을 뗀 뒤 가장 가까운 문단 경계로 정렬 */
       settle: function () {
         if (busy || atEnd() || atStart()) return;
+        var lastP = paras[paras.length - 1];
+        if (Math.abs(lastP.getBoundingClientRect().top - headH() - 12) < 26) return;  /* 끝에 도달 — 다음 면에 양보 */
         var top = headH() + 12, best = null, bestD = 1e9;
         paras.forEach(function (p) {
           var d = Math.abs(p.getBoundingClientRect().top - top);
