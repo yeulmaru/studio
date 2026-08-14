@@ -236,10 +236,13 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
   .wn-en { color: var(--muted); -webkit-text-stroke: 0; }
 }
 
-/* 작품 사진 — 화면 최상단 · 원본 비율 유지(절대 자르지 않음) · 배경 없음 */
+/* 작품 사진 — 화면 최상단 · 폭은 항상 100vw 고정 · 배경 없음
+   높이는 남는 공간을 쓰되 3:4(원본 비율)를 넘지 않는다.
+   공간이 3:4보다 짧은 기기에서는 위아래만 잘린다 — 폭은 절대 줄지 않는다. */
 .w-photo {
   flex: 1 1 0;
   min-height: 0;
+  max-height: calc(100vw * 4 / 3);   /* 원본 비율 이상으로 늘어나지 않음 */
   margin-inline: calc(var(--pad) * -1);
   margin-top: calc((clamp(14px, 3.4vw, 26px) + 44px) * -1);  /* 페이지 상단 패딩 상쇄 */
 }
@@ -247,8 +250,14 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
 .w-photo img {
   width: 100%;
   height: 100%;
-  object-fit: contain;      /* 잘림 없음 */
-  object-position: 50% 0%;  /* 상단 기준 */
+  object-fit: cover;          /* 폭 100% 유지 — 모자란 높이만 잘라낸다 */
+  object-position: 50% 56%;   /* 하늘보다 조각 쪽을 남긴다 */
+}
+
+/* 데스크톱은 2열이라 폭 기준이 무의미 — 잘림 없이 전체를 보여준다 */
+@media (min-width: 901px) {
+  .w-photo { max-height: none; }
+  .w-photo img { object-fit: contain; }
 }
 
 /* 한 줄 캡션 (미술관 표기 관례) — 작품 사진과 동급의 주요소 */
