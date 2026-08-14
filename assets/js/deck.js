@@ -127,7 +127,7 @@
   }
 
   /* ── 휠: 제스처 1회 = 1페이지 (데스크톱) ─── */
-  var isDesktop = function () { return window.matchMedia("(min-width: 901px)").matches; };
+  var isDesktop = function () { return window.matchMedia("(min-width: 901px) and (min-aspect-ratio: 1/1)").matches; };
   var lastWheelT = -1000;
 
   window.addEventListener("wheel", function (e) {

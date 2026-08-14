@@ -255,7 +255,7 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
 }
 
 /* 데스크톱은 2열이라 폭 기준이 무의미 — 잘림 없이 전체를 보여준다 */
-@media (min-width: 901px) {
+@media (min-width: 901px) and (min-aspect-ratio: 1/1) {
   .w-photo { max-height: none; }
   .w-photo img { object-fit: contain; }
 }
@@ -500,7 +500,7 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
 }
 .note-body p { overflow-wrap: normal; }
 
-@media (min-width: 901px) {
+@media (min-width: 901px) and (min-aspect-ratio: 1/1) {
   .pg--note { justify-content: center; }
   .note-body { column-count: 2; column-gap: var(--gap-lg); display: block; max-width: none; }
   .note-body p { break-inside: avoid-column; margin-bottom: clamp(14px, 2vh, 22px); }
@@ -637,7 +637,7 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
 .zoom-close svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.5; }
 
 /* ── 데스크톱 ──────────────────────────────── */
-@media (min-width: 901px) {
+@media (min-width: 901px) and (min-aspect-ratio: 1/1) {
   .pg { padding-inline: var(--pad); height: 100svh; }
 
   .pg--work {
