@@ -411,9 +411,16 @@
   })();
 
   /* ── 03 유튜브 ──────────────────────────────
-     [data-youtube] 값에서 영상 ID를 뽑아 iframe 을 만든다.
+     [data-youtube] 값에서 영상 ID를 뽑는다.
      watch?v= / youtu.be / shorts / embed / live / 11자리 ID 모두 허용.
-     비어 있거나 못 읽으면 "준비 중" 자리표시자. */
+     비어 있거나 못 읽으면 "준비 중" 자리표시자.
+
+     iframe 은 처음부터 넣지 않는다. 썸네일 + 재생 버튼(파사드)을 보여주고
+     누르면 그때 iframe 을 만든다. 이유:
+     · iframe 위에서 굴린 휠은 우리 스크립트에 안 오고 브라우저가 직접 스크롤해서
+       0.9s 플립 대신 "휙" 튀어 버린다 — 파사드는 우리 DOM 이라 정상 플립
+     · 유튜브 스크립트를 재생 전엔 안 받아 페이지가 가볍다
+     3면을 벗어나면 iframe 을 지우고 파사드로 되돌린다 (소리도 멈춤). */
   (function youtube() {
     var boxes = document.querySelectorAll("[data-youtube]");
     if (!boxes.length) return;
@@ -426,6 +433,7 @@
     };
     boxes.forEach(function (box) {
       var id = parse(box.getAttribute("data-youtube"));
+      var title = box.getAttribute("data-title") || "YouTube video";
       if (!id) {
         var ph = document.createElement("div");
         ph.className = "v-empty";
@@ -433,14 +441,52 @@
         box.appendChild(ph);
         return;
       }
-      var f = document.createElement("iframe");
-      f.src = "https://www.youtube-nocookie.com/embed/" + id + "?rel=0&modestbranding=1";
-      f.title = box.getAttribute("data-title") || "YouTube video";
-      f.loading = "lazy";
-      f.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
-      f.setAttribute("allowfullscreen", "");
-      f.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
-      box.appendChild(f);
+
+      /* 파사드: 썸네일 + 재생 버튼 */
+      var facade = document.createElement("button");
+      facade.type = "button";
+      facade.className = "v-play";
+      facade.setAttribute("aria-label", "영상 재생 — " + title);
+      var thumb = document.createElement("img");
+      thumb.alt = "";
+      thumb.decoding = "async";
+      thumb.loading = "lazy";
+      thumb.src = "https://i.ytimg.com/vi/" + id + "/maxresdefault.jpg";
+      thumb.addEventListener("error", function () {
+        if (thumb.src.indexOf("maxresdefault") > -1) thumb.src = "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
+      });
+      facade.appendChild(thumb);
+      facade.insertAdjacentHTML("beforeend",
+        '<span class="v-play-btn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>' +
+        '<span class="v-play-hint" aria-hidden="true">Play</span>');
+      box.appendChild(facade);
+
+      var iframe = null;
+      var play = function () {
+        if (iframe) return;
+        iframe = document.createElement("iframe");
+        iframe.src = "https://www.youtube-nocookie.com/embed/" + id + "?rel=0&modestbranding=1&autoplay=1&playsinline=1";
+        iframe.title = title;
+        iframe.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
+        iframe.setAttribute("allowfullscreen", "");
+        iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+        box.appendChild(iframe);
+        box.classList.add("is-playing");
+      };
+      var stop = function () {
+        if (!iframe) return;
+        box.removeChild(iframe);
+        iframe = null;
+        box.classList.remove("is-playing");
+      };
+      facade.addEventListener("click", play);
+
+      /* 3면을 벗어나면 플레이어 제거 → 다음에 다시 파사드부터 */
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) { if (!en.isIntersecting) stop(); });
+        }, { threshold: 0.2 }).observe(box);
+      }
 
       /* 정보 칸에 [YouTube에서 보기] 링크 */
       var info = box.parentNode && box.parentNode.querySelector(".v-info");
