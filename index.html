@@ -42,13 +42,18 @@
   <!-- ══ 01 · 작품 ═══════════════════════════ -->
   <section class="pg pg--work" id="p1" aria-label="작품">
 
-    <figure class="w-photo r">
-      <picture>
-        <source srcset="assets/img/work.webp" type="image/webp">
-        <img src="assets/img/work.jpg" width="3000" height="4000"
-             alt="잔디밭의 흙과 잔디 층을 들어 올려 흰 기둥으로 받쳐 세운 안민환의 야외 설치 작품"
-             fetchpriority="high" decoding="async">
-      </picture>
+    <!-- 작품 사진 슬라이더 — <picture class="w-slide"> 를 원하는 만큼 나열한다.
+         한 장뿐이면 컨트롤이 숨겨지고 사진 한 장으로 보인다.
+         data-autoplay="5000" 을 붙이면 5초마다 자동으로 넘어간다 (기본은 수동). -->
+    <figure class="w-photo r" data-slider aria-roledescription="carousel" aria-label="작품 사진">
+      <div class="w-track">
+        <picture class="w-slide">
+          <source srcset="assets/img/work.webp" type="image/webp">
+          <img src="assets/img/work.jpg" width="3000" height="4000"
+               alt="잔디밭의 흙과 잔디 층을 들어 올려 흰 기둥으로 받쳐 세운 안민환의 야외 설치 작품"
+               fetchpriority="high" decoding="async">
+        </picture>
+      </div>
     </figure>
 
     <figcaption class="w-cap r">
@@ -93,10 +98,29 @@
 
   </section>
 
-  <!-- ══ 03 · 전시 ═══════════════════════════ -->
-  <section class="pg pg--exh" id="p3" aria-labelledby="t-exh">
+  <!-- ══ 03 · 영상 ═══════════════════════════ -->
+  <!-- data-youtube 에 유튜브 링크를 아무 형식으로나 넣는다:
+       watch?v=… / youtu.be/… / shorts/… / embed/… / 11자리 ID
+       비어 있으면 "준비 중" 자리표시자가 나온다. -->
+  <section class="pg pg--video" id="p3" aria-labelledby="t-video">
 
-    <p class="label label--muted r">03 — Exhibition</p>
+    <p class="label label--muted r">03 — Video</p>
+
+    <div class="v-body">
+      <div class="v-frame r" data-youtube="" data-title="풍경조각 : 토대를 까는 일 — 안민환"></div>
+
+      <div class="v-info r">
+        <h2 class="v-ko" id="t-video" lang="ko">작품 영상</h2>
+        <p class="v-desc" lang="ko">〈풍경조각 : 토대를 까는 일〉의 제작 과정과 설치 기록.</p>
+        <p class="v-note" lang="ko">* 영상은 YouTube에서 재생됩니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 04 · 전시 ═══════════════════════════ -->
+  <section class="pg pg--exh" id="p4" aria-labelledby="t-exh">
+
+    <p class="label label--muted r">04 — Exhibition</p>
 
     <div class="exh-body">
       <figure class="e-poster r">
@@ -135,10 +159,10 @@
     </div>
   </section>
 
-  <!-- ══ 04 · 작가 ═══════════════════════════ -->
-  <section class="pg pg--artist" id="p4" aria-labelledby="t-artist">
+  <!-- ══ 05 · 작가 ═══════════════════════════ -->
+  <section class="pg pg--artist" id="p5" aria-labelledby="t-artist">
 
-    <p class="label label--muted r">04 — Artist</p>
+    <p class="label label--muted r">05 — Artist</p>
 
     <div class="a-body">
       <figure class="a-photo r">

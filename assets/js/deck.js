@@ -1,5 +1,5 @@
 /* ═════════════════════════════════════════════
-   deck.js — 3페이지 스크롤 제어
+   deck.js — 5페이지 스크롤 제어 · 01 사진 슬라이더 · 03 유튜브
    모션 기준: creative/assets/js/main.js 의 book 모드
    · 제스처 1회 = 1페이지 플립, 0.9s power2.inOut
    · 제스처 판정은 이벤트 간격 90ms 갭으로만 (잠금·쿨다운 없음)
@@ -115,7 +115,7 @@
     var dots = document.createElement("nav");
     dots.className = "deck-dots";
     dots.setAttribute("aria-label", "페이지 이동");
-    var names = ["작품", "기획글", "전시", "작가"];
+    var names = ["작품", "기획글", "영상", "전시", "작가"];
     pages.forEach(function (pg, i) {
       var b = document.createElement("button");
       b.type = "button";
@@ -303,6 +303,9 @@
     if (tag === "input" || tag === "textarea" || tag === "select") return;
     if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); flipTo(current + 1); }
     else if (e.key === "ArrowUp" || e.key === "PageUp") { e.preventDefault(); flipTo(current - 1); }
+    else if ((e.key === "ArrowLeft" || e.key === "ArrowRight") && current === 0 && window.deckSlider) {
+      e.preventDefault(); window.deckSlider.go(e.key === "ArrowRight" ? 1 : -1);
+    }
     else if (e.key === "Home") { e.preventDefault(); flipTo(0); }
     else if (e.key === "End") { e.preventDefault(); flipTo(pages.length - 1); }
   });
@@ -322,6 +325,136 @@
           sec.classList.remove("is-loading");
         }, hold);
       });
+    });
+  })();
+
+
+  /* ── 01 작품 사진 슬라이더 ─────────────────
+     [data-slider] 안의 .w-slide 를 가로로 넘긴다.
+     · 좌우 스와이프(세로 스크롤과 구분: 가로 이동이 더 클 때만)
+     · 우하단 ‹ › 버튼 + "1 / N" 카운터
+     · data-autoplay="ms" 가 있으면 자동 넘김, 손대면 타이머 재시작
+     · 한 장이면 아무것도 안 붙인다 */
+  (function slider() {
+    var root = document.querySelector("[data-slider]");
+    if (!root) return;
+    var track = root.querySelector(".w-track");
+    var slides = track ? Array.prototype.slice.call(track.querySelectorAll(".w-slide")) : [];
+    if (slides.length < 2) return;
+
+    var idx = 0, timer = null;
+    var ms = parseInt(root.getAttribute("data-autoplay"), 10) || 0;
+
+    var ctl = document.createElement("div");
+    ctl.className = "w-ctl";
+    var mk = function (dir, label) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-label", label);
+      b.innerHTML = dir < 0
+        ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>'
+        : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
+      b.addEventListener("click", function () { go(dir); });
+      return b;
+    };
+    var count = document.createElement("span");
+    count.className = "w-count";
+    count.setAttribute("aria-live", "polite");
+    ctl.appendChild(mk(-1, "이전 사진"));
+    ctl.appendChild(count);
+    ctl.appendChild(mk(1, "다음 사진"));
+    root.appendChild(ctl);
+
+    var render = function () {
+      track.style.transform = "translate3d(-" + (idx * 100) + "%, 0, 0)";
+      count.textContent = (idx + 1) + " / " + slides.length;
+      slides.forEach(function (sl, i) { sl.setAttribute("aria-hidden", i === idx ? "false" : "true"); });
+    };
+    var restart = function () {
+      if (timer) clearInterval(timer);
+      if (ms > 0 && !reduced) timer = setInterval(function () { idx = (idx + 1) % slides.length; render(); }, ms);
+    };
+    var go = function (dir) {
+      idx = (idx + dir + slides.length) % slides.length;
+      render();
+      restart();
+    };
+
+    /* 스와이프 — 가로 이동이 세로보다 클 때만 슬라이더가 가져간다 */
+    var sx = null, sy = null, horiz = false;
+    root.addEventListener("touchstart", function (e) {
+      sx = e.touches[0].clientX; sy = e.touches[0].clientY; horiz = false;
+    }, { passive: true });
+    root.addEventListener("touchmove", function (e) {
+      if (sx === null) return;
+      var dx = e.touches[0].clientX - sx, dy = e.touches[0].clientY - sy;
+      if (!horiz && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy) * 1.3) horiz = true;
+    }, { passive: true });
+    root.addEventListener("touchend", function (e) {
+      if (sx === null) return;
+      var dx = e.changedTouches[0].clientX - sx;
+      sx = sy = null;
+      if (horiz && Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+      horiz = false;
+    });
+
+    /* 자동 넘김은 1면이 보일 때만 돈다 */
+    if (ms > 0 && "IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) restart();
+          else if (timer) { clearInterval(timer); timer = null; }
+        });
+      }, { threshold: 0.5 }).observe(root);
+    } else restart();
+
+    render();
+    window.deckSlider = { go: go };
+  })();
+
+  /* ── 03 유튜브 ──────────────────────────────
+     [data-youtube] 값에서 영상 ID를 뽑아 iframe 을 만든다.
+     watch?v= / youtu.be / shorts / embed / live / 11자리 ID 모두 허용.
+     비어 있거나 못 읽으면 "준비 중" 자리표시자. */
+  (function youtube() {
+    var boxes = document.querySelectorAll("[data-youtube]");
+    if (!boxes.length) return;
+    var parse = function (u) {
+      u = (u || "").trim();
+      if (!u) return null;
+      if (/^[\w-]{11}$/.test(u)) return u;
+      var m = u.match(/(?:v=|youtu\.be\/|shorts\/|embed\/|live\/)([\w-]{11})/);
+      return m ? m[1] : null;
+    };
+    boxes.forEach(function (box) {
+      var id = parse(box.getAttribute("data-youtube"));
+      if (!id) {
+        var ph = document.createElement("div");
+        ph.className = "v-empty";
+        ph.textContent = "Video — coming soon";
+        box.appendChild(ph);
+        return;
+      }
+      var f = document.createElement("iframe");
+      f.src = "https://www.youtube-nocookie.com/embed/" + id + "?rel=0&modestbranding=1";
+      f.title = box.getAttribute("data-title") || "YouTube video";
+      f.loading = "lazy";
+      f.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
+      f.setAttribute("allowfullscreen", "");
+      f.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+      box.appendChild(f);
+
+      /* 정보 칸에 [YouTube에서 보기] 링크 */
+      var info = box.parentNode && box.parentNode.querySelector(".v-info");
+      if (info && !info.querySelector(".v-link")) {
+        var a = document.createElement("a");
+        a.className = "v-link";
+        a.href = "https://www.youtube.com/watch?v=" + id;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.innerHTML = '<span class="nb-bracket" aria-hidden="true">[</span>YouTube에서 보기<span class="nb-bracket" aria-hidden="true">]</span>';
+        info.appendChild(a);
+      }
     });
   })();
 
