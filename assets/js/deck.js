@@ -332,7 +332,7 @@
   /* ── 01 작품 사진 슬라이더 ─────────────────
      [data-slider] 안의 .w-slide 를 가로로 넘긴다.
      · 좌우 스와이프(세로 스크롤과 구분: 가로 이동이 더 클 때만)
-     · 우하단 ‹ › 버튼 + "1 / N" 카운터
+     · 좌우 가운데 반투명 ‹ › 버튼 + 우하단 "1 / N" 카운터
      · data-autoplay="ms" 가 있으면 자동 넘김, 손대면 타이머 재시작
      · 한 장이면 아무것도 안 붙인다 */
   (function slider() {
@@ -345,11 +345,10 @@
     var idx = 0, timer = null;
     var ms = parseInt(root.getAttribute("data-autoplay"), 10) || 0;
 
-    var ctl = document.createElement("div");
-    ctl.className = "w-ctl";
     var mk = function (dir, label) {
       var b = document.createElement("button");
       b.type = "button";
+      b.className = "w-arrow " + (dir < 0 ? "w-arrow--prev" : "w-arrow--next");
       b.setAttribute("aria-label", label);
       b.innerHTML = dir < 0
         ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>'
@@ -360,10 +359,9 @@
     var count = document.createElement("span");
     count.className = "w-count";
     count.setAttribute("aria-live", "polite");
-    ctl.appendChild(mk(-1, "이전 사진"));
-    ctl.appendChild(count);
-    ctl.appendChild(mk(1, "다음 사진"));
-    root.appendChild(ctl);
+    root.appendChild(mk(-1, "이전 사진"));
+    root.appendChild(mk(1, "다음 사진"));
+    root.appendChild(count);
 
     var render = function () {
       track.style.transform = "translate3d(-" + (idx * 100) + "%, 0, 0)";

@@ -363,39 +363,50 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
 }
 @media (prefers-reduced-motion: reduce) { .w-track { transition: none; } }
 
-/* 컨트롤 — 사진 위 우하단. 잉크/종이 반전(difference)으로 어떤 사진 위에서도 읽힌다 */
-.w-ctl {
+/* 컨트롤 — 좌우 가운데 반투명 동그라미 ‹ ›, 우하단 "1 / N" 카운터 */
+.w-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  background: rgba(20, 19, 17, 0.34);
+  color: #f4f1ea;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: background var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+.w-arrow--prev { left: clamp(10px, 2.6vw, 20px); }
+.w-arrow--next { right: clamp(10px, 2.6vw, 20px); }
+.w-arrow:hover { background: rgba(20, 19, 17, 0.62); }
+.w-arrow:active { background: #f4f1ea; color: #141311; }
+.w-arrow svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.w-arrow:focus-visible { outline: 2px solid #f4f1ea; outline-offset: 2px; }
+
+.w-count {
   position: absolute;
   right: var(--pad);
   bottom: clamp(12px, 2.4vh, 22px);
   z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  mix-blend-mode: difference;
-  color: #f4f1ea;
-}
-.w-ctl button {
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
-  border: 1px solid rgba(244, 241, 234, 0.7);
-  border-radius: var(--radius-pill);
-  cursor: pointer;
-  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
-}
-.w-ctl button:hover { background: #f4f1ea; color: #141311; }
-.w-ctl button svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.6; }
-.w-count {
   font-family: var(--font-label);
   font-size: var(--fs-label);
   letter-spacing: var(--ls-label-tight);
-  padding-inline: 8px 6px;
   font-variant-numeric: tabular-nums;
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(20, 19, 17, 0.34);
+  color: #f4f1ea;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
 @media (min-width: 901px) and (min-aspect-ratio: 1/1) {
-  .w-ctl { right: clamp(12px, 1.4vw, 24px); }
+  .w-count { right: clamp(12px, 1.4vw, 24px); }
+  .w-arrow { width: 48px; height: 48px; }
 }
 
 /* ══ 03 · 영상 ═══════════════════════════════ */

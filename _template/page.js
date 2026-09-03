@@ -17,7 +17,7 @@ window.PAGE = {
     material: "재료, 크기",
     materialEn: "Materials, Dimensions",
     statement: "작품을 한 줄로 설명하는 스테이트먼트.",
-    autoplay: 0,                                   // ms. 0 이면 수동. 예: 5000
+    autoplay: 3000,                                // ms 간격으로 자동 넘김. 0 이면 손으로만 넘김
     images: [                                      // 순서대로 슬라이드. 원하는 만큼 추가
       { src: "img/work-01.jpg", alt: "작품 사진 1" },
       { src: "img/work-02.jpg", alt: "작품 사진 2" },
