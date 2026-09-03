@@ -5,205 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script>document.documentElement.classList.add("js");</script>
 
-<title>풍경조각 : 토대를 까는 일 — 안민환</title>
-<meta name="description" content="안민환, 〈풍경조각 : 토대를 까는 일〉, 2026, 흙·잔디, 가변설치. GS칼텍스 예울마루 창작스튜디오 7기 입주작가전.">
+<!-- 내용은 전부 같은 폴더의 page.js 에 있다. 이 파일은 손대지 않는다. -->
+<title>Creative Studio</title>
+<meta name="description" content="">
 <meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#161511" media="(prefers-color-scheme: dark)">
-
 <meta property="og:type" content="article">
-<meta property="og:title" content="풍경조각 : 토대를 까는 일 — 안민환">
-<meta property="og:description" content="Minhwan An, Landscape Sculpture: Laying the Foundation, 2026, soil and grass, dimensions variable.">
-<meta property="og:image" content="assets/img/work.jpg">
+<meta property="og:title" content="">
+<meta property="og:description" content="">
+<meta property="og:image" content="">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="preload" href="assets/fonts/anton/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/img/work.webp" as="image" type="image/webp" fetchpriority="high">
-<link rel="stylesheet" href="assets/css/fonts.css">
-<link rel="stylesheet" href="assets/fonts/pretendard/pretendardvariable-dynamic-subset.css">
-<link rel="stylesheet" href="assets/css/tokens.css">
-<link rel="stylesheet" href="assets/css/label.css">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23141311'/><text x='50' y='69' font-size='60' font-family='Arial' font-weight='bold' fill='%23f4f1ea' text-anchor='middle'>A</text></svg>">
+<link rel="preload" href="/studio/assets/fonts/anton/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/studio/assets/css/fonts.css">
+<link rel="stylesheet" href="/studio/assets/fonts/pretendard/pretendardvariable-dynamic-subset.css">
+<link rel="stylesheet" href="/studio/assets/css/tokens.css">
+<link rel="stylesheet" href="/studio/assets/css/label.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23141311'/><text x='50' y='69' font-size='60' font-family='Arial' font-weight='bold' fill='%23f4f1ea' text-anchor='middle'>Y</text></svg>">
 </head>
 
 <body class="book">
 <div class="grain" aria-hidden="true"></div>
-
-<!-- 상단 페이드 — 사진 위에서도 네비가 읽히게 (내용과 겹치지 않을 만큼만) -->
 <div class="topfade" aria-hidden="true"></div>
 
-<!-- ── 좌상단 고정: 전시 타이틀 (전 페이지 공통) ── -->
-<header class="fixhead">
-  <p class="fh-ko">창작스튜디오 7기 입주작가 안민환 〈풍경조각 <span class="colon" aria-hidden="true">:</span> 토대를 까는 일〉</p>
-  <p class="fh-en">Landscape Sculpture: Laying the Foundation</p>
-</header>
+<header class="fixhead"></header>
 
-<main class="deck">
+<main class="deck"></main>
 
-  <!-- ══ 01 · 작품 ═══════════════════════════ -->
-  <section class="pg pg--work" id="p1" aria-label="작품">
-
-    <!-- 작품 사진 슬라이더 — <picture class="w-slide"> 를 원하는 만큼 나열한다.
-         한 장뿐이면 컨트롤이 숨겨지고 사진 한 장으로 보인다.
-         data-autoplay="5000" 을 붙이면 5초마다 자동으로 넘어간다 (기본은 수동). -->
-    <figure class="w-photo r" data-slider aria-roledescription="carousel" aria-label="작품 사진">
-      <div class="w-track">
-        <picture class="w-slide">
-          <source srcset="assets/img/work.webp" type="image/webp">
-          <img src="assets/img/work.jpg" width="3000" height="4000"
-               alt="잔디밭의 흙과 잔디 층을 들어 올려 흰 기둥으로 받쳐 세운 안민환의 야외 설치 작품"
-               fetchpriority="high" decoding="async">
-        </picture>
-      </div>
-    </figure>
-
-    <figcaption class="w-cap r">
-      <p class="label label--muted">01 — Artwork</p>
-      <p class="cap-ko" lang="ko">
-        <span class="c-artist">안민환</span>
-        <span class="c-title">풍경조각 <span class="colon" aria-hidden="true">:</span> 토대를 까는 일<span class="c-year">(2026)</span></span>
-        <span class="c-mat">흙, 잔디, 가변설치</span>
-      </p>
-      <p class="cap-en">Minhwan An<span class="ce-sep" aria-hidden="true">·</span><em>Landscape Sculpture: Laying the Foundation</em><span class="ce-sep" aria-hidden="true">·</span>Soil, Grass, Dimensions variable</p>
-    </figcaption>
-
-    <div class="w-note r">
-      <button class="note-btn" type="button" data-note-go>
-        <span class="nb-bracket" aria-hidden="true">[</span>기획글 보기<span class="nb-bracket" aria-hidden="true">]</span>
-      </button>
-      <p class="wn-ko" lang="ko">땅의 표면을 들어 올려, 풍경이 딛고 있던 토대를 드러낸다.</p>
-    </div>
-
-
-  </section>
-
-  <!-- ══ 02 · 기획글 ═════════════════════════ -->
-  <section class="pg pg--note" id="p2" aria-labelledby="t-note">
-
-    <div class="note-head">
-      <p class="label label--muted">02 — Curatorial Note</p>
-      <h2 class="note-title" id="t-note" lang="ko">기획글</h2>
-    </div>
-
-    <div class="note-body" lang="ko">
-      <p>우리가 바라보는 풍경은 과연 어디에서 시작될까. 바다 위에 흩어진 섬들은 서로 떨어져 있는 존재처럼 보이지만, 바다 아래에서는 하나의 대지로 이어져 있다. 《풍경 조각: 토대를 까는 일》은 이처럼 눈에 보이지 않는 연결을 드러내며, 익숙한 풍경을 새로운 시선으로 바라보도록 제안한다.</p>
-
-      <p>안민환의 조각은 ‘우리는 무엇으로부터 시작이 되는가’라는 질문에서 출발한다. 그의 작업에는 생성과 소멸, 몸과 공간, 기억과 풍경이 자주 등장하는데, 이는 각각 독립된 주제라기보다 인간이 세계를 경험하고 삶을 형성해 가는 여정을 탐구하기 위한 단일한 조형 언어로 수렴된다. 그는 신체가 도구가 되는 퍼포먼스적 행위를 통해 걷고, 오르고, 파고, 드러내는 과정, 즉 노동이 집약된 작업 방식을 고수한다. 이러한 반복적인 방식은 스스로 시작점(태초의 발견)을 찾아가는 수행에 가깝다.</p>
-
-      <p>그는 오랫동안 CUT-OUT 작업을 통해 형태를 자르고, 들어 올리는 조형 언어를 발전시켜 왔다. 이번 전시에서는 그 대상이 특정 크기의 조각을 넘어 대지 전체로 확장된다. 잔디와 땅을 절개하고 걷어내는 행위를 통해 익숙한 대지는 작품의 재료이자, 캔버스로 전환된다. 들춰진 땅 아래 드러난 흙은 새로운 생성의 가능성과 소멸의 필연성을 품고, 비워진 공간은 하늘과 숲, 바다를 담아내며 주변 환경을 작품 속으로 끌어들인다. 이렇듯 그의 풍경 조각은 고정된 물체가 아니라 자연과 시간, 그리고 관람자의 경험이 함께 완성해 가는 열린 조각이 된다.</p>
-
-      <p>바다와 육지가 맞닿으며 끊임없이 경계를 바꾸는 장도의 장소성은 그의 작업을 심화하는 배경이 된다. 작가는 이곳의 지질학적 구조를 CUT-OUT의 조형 원리와 연결 지으며, 섬을 고립된 대상이 아닌 같은 토대 위에 서로 다른 모습으로 이어지는 풍경으로 바라본다. 이와 같은 시각은 우리가 당연하게 여겼던 경계와 구분을 환기하고, 나아가 자연과 인간 또한 동일한 세계 안에서 서로 맞닿은 존재임을 보여준다.</p>
-
-      <p>여수세계섬박람회 개최를 기념하여 마련된 《풍경 조각: 토대를 까는 일》은 감춰져 있던 토대를 드러내고, 그 위에서 형성되는 관계와 연결을 발견하는 전시이다. 관람자는 작품의 형태만을 바라보기보다, 변형된 토대와 그 안에 비워진 공간, 그리고 그곳을 채우는 하늘과 바람, 빛의 변화를 천천히 따라가며 풍경을 하나의 조각으로 경험하게 된다. 그렇게 걷고 머무는 시간 속에서 자연과 인간, 섬과 대지, 생성과 소멸이 하나의 토대 위에서 서로 이어져 있음을 새롭게 깨닫게 될 것이다. 여수세계섬박람회라는 뜻깊은 계기를 맞아 장도를 찾는 모든 관람자에게, 이번 전시가 섬이라는 토대 위에서 펼쳐지는 새로운 감각적 경험의 지평을 열어주는 특별한 순간이 되기를 기대한다.</p>
-    </div>
-
-  </section>
-
-  <!-- ══ 03 · 영상 ═══════════════════════════ -->
-  <!-- data-youtube 에 유튜브 링크를 아무 형식으로나 넣는다:
-       watch?v=… / youtu.be/… / shorts/… / embed/… / 11자리 ID
-       비어 있으면 "준비 중" 자리표시자가 나온다. -->
-  <section class="pg pg--video" id="p3" aria-labelledby="t-video">
-
-    <p class="label label--muted r">03 — Video</p>
-
-    <div class="v-body">
-      <div class="v-frame r" data-youtube="" data-title="풍경조각 : 토대를 까는 일 — 안민환"></div>
-
-      <div class="v-info r">
-        <h2 class="v-ko" id="t-video" lang="ko">작품 영상</h2>
-        <p class="v-desc" lang="ko">〈풍경조각 : 토대를 까는 일〉의 제작 과정과 설치 기록.</p>
-        <p class="v-note" lang="ko">* 영상은 YouTube에서 재생됩니다.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ 04 · 전시 ═══════════════════════════ -->
-  <section class="pg pg--exh" id="p4" aria-labelledby="t-exh">
-
-    <p class="label label--muted r">04 — Exhibition</p>
-
-    <div class="exh-body">
-      <figure class="e-poster r">
-        <button class="poster-btn" type="button" aria-label="포스터 크게 보기" data-zoom>
-          <picture>
-            <source srcset="assets/img/poster.webp" type="image/webp">
-            <img src="assets/img/poster.jpg" width="1536" height="2048"
-                 alt="전시 포스터 — 풍경조각 : 토대를 까는 일" loading="lazy" decoding="async">
-          </picture>
-        </button>
-        <p class="hint"><span class="hint--tap">포스터를 탭하면 확대</span><span class="hint--click">포스터를 클릭하면 확대</span></p>
-      </figure>
-
-      <div class="e-info">
-        <p class="e-kicker" lang="ko">GS칼텍스 예울마루 창작스튜디오</p>
-        <h2 class="e-ko" id="t-exh" lang="ko">7기 입주작가전<span class="us" aria-hidden="true">_</span>안민환<br><span class="nb">〈풍경조각 <span class="colon" aria-hidden="true">:</span> 토대를 까는 일〉</span></h2>
-
-        <dl class="spec r">
-          <div class="spec-row">
-            <dt><span class="label">Period</span><span class="ko" lang="ko">기간</span></dt>
-            <dd><span class="v">2026. 08. 25<span class="dow">Tue</span><span class="dash" aria-hidden="true">—</span>10. 25<span class="dow">Sun</span></span></dd>
-          </div>
-          <div class="spec-row">
-            <dt><span class="label">Hours</span><span class="ko" lang="ko">운영시간</span></dt>
-            <dd>
-              <span class="v">09:00<span class="dash" aria-hidden="true">—</span>22:00</span>
-              <span class="v-note" lang="ko">* 물때에 따라 변동 · 휴장 <a class="v-link" href="https://www.yeulmaru.org/community/v/1733/" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">[</span>장도 물때 확인<span aria-hidden="true">]</span></a></span>
-            </dd>
-          </div>
-          <div class="spec-row">
-            <dt><span class="label">Venue</span><span class="ko" lang="ko">장소</span></dt>
-            <dd><span class="v" lang="ko">GS칼텍스 예울마루, 장도 잔디광장</span></dd>
-          </div>
-        </dl>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ 05 · 작가 ═══════════════════════════ -->
-  <section class="pg pg--artist" id="p5" aria-labelledby="t-artist">
-
-    <p class="label label--muted r">05 — Artist</p>
-
-    <div class="a-body">
-      <figure class="a-photo r">
-        <picture>
-          <source srcset="assets/img/artist.webp" type="image/webp">
-          <img src="assets/img/artist.jpg" width="1333" height="2000"
-               alt="작가 안민환" loading="lazy" decoding="async">
-        </picture>
-      </figure>
-
-      <div class="a-info">
-        <h2 class="display a-name" id="t-artist">Minhwan&nbsp;An</h2>
-        <p class="a-ko" lang="ko">안민환<span class="born">b.&nbsp;1988 · 조각</span></p>
-        <p class="a-stmt" lang="ko">조각을 통해 신체와 풍경의 관계, 확장되는 공간성을 탐구한다.</p>
-        <ul class="a-cv" lang="ko">
-          <li>개인전 《CUT—OUT》(2024) 외 3회</li>
-          <li>신한갤러리(2024) · 문래예술공장(2023) 그룹전</li>
-          <li>울산북구예술창작소(2018) · 모하창작스튜디오(2017) 레지던시</li>
-        </ul>
-      </div>
-    </div>
-
-    <footer class="site-foot">
-      <p class="wordmark">Creative Studio.</p>
-      <p class="foot-copy">(c) 2023-26. GS Caltex Yeulmaru. all rights reserved.</p>
-    </footer>
-  </section>
-
-</main>
-
-<!-- ── 포스터 확대 ─────────────────────────────── -->
 <dialog class="zoom" id="zoom" aria-label="포스터 확대 보기">
   <button class="zoom-close" type="button" aria-label="닫기" data-close>
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
   </button>
-  <picture>
-    <source srcset="assets/img/poster.webp" type="image/webp">
-    <img src="assets/img/poster.jpg" alt="전시 포스터 확대" loading="lazy" decoding="async">
-  </picture>
 </dialog>
 
-<script src="assets/js/deck.js" defer></script>
+<script src="page.js"></script>
+<script src="/studio/assets/js/render.js" defer></script>
+<script src="/studio/assets/js/deck.js" defer></script>
 </body>
 </html>

@@ -5,211 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script>document.documentElement.classList.add("js");</script>
 
-<title>작품명 — 작가명</title>
-<meta name="description" content="작가명, 〈작품명〉, 2026, 재료, 크기. GS칼텍스 예울마루 창작스튜디오 N기 입주작가전.">
+<!-- 내용은 전부 같은 폴더의 page.js 에 있다. 이 파일은 손대지 않는다. -->
+<title>Creative Studio</title>
+<meta name="description" content="">
 <meta name="theme-color" content="#f4f1ea" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#161511" media="(prefers-color-scheme: dark)">
-
 <meta property="og:type" content="article">
-<meta property="og:title" content="작품명 — 작가명">
-<meta property="og:description" content="Artist Name, Work Title, 2026, materials, dimensions.">
-<meta property="og:image" content="img/work-01.jpg">
+<meta property="og:title" content="">
+<meta property="og:description" content="">
+<meta property="og:image" content="">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="preload" href="../assets/fonts/anton/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="img/work-01.webp" as="image" type="image/webp" fetchpriority="high">
-<link rel="stylesheet" href="../assets/css/fonts.css">
-<link rel="stylesheet" href="../assets/fonts/pretendard/pretendardvariable-dynamic-subset.css">
-<link rel="stylesheet" href="../assets/css/tokens.css">
-<link rel="stylesheet" href="../assets/css/label.css">
+<link rel="preload" href="/studio/assets/fonts/anton/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/studio/assets/css/fonts.css">
+<link rel="stylesheet" href="/studio/assets/fonts/pretendard/pretendardvariable-dynamic-subset.css">
+<link rel="stylesheet" href="/studio/assets/css/tokens.css">
+<link rel="stylesheet" href="/studio/assets/css/label.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23141311'/><text x='50' y='69' font-size='60' font-family='Arial' font-weight='bold' fill='%23f4f1ea' text-anchor='middle'>Y</text></svg>">
 </head>
 
 <body class="book">
 <div class="grain" aria-hidden="true"></div>
-
-<!-- 상단 페이드 — 사진 위에서도 네비가 읽히게 (내용과 겹치지 않을 만큼만) -->
 <div class="topfade" aria-hidden="true"></div>
 
-<!-- ── 좌상단 고정: 전시 타이틀 (전 페이지 공통) ── -->
-<header class="fixhead">
-  <p class="fh-ko">창작스튜디오 N기 입주작가 작가명 〈작품명〉</p>
-  <p class="fh-en">Work Title in English</p>
-</header>
+<header class="fixhead"></header>
 
-<main class="deck">
+<main class="deck"></main>
 
-  <!-- ══ 01 · 작품 ═══════════════════════════ -->
-  <section class="pg pg--work" id="p1" aria-label="작품">
-
-    <!-- 작품 사진 슬라이더 — <picture class="w-slide"> 를 원하는 만큼 나열한다.
-         한 장뿐이면 컨트롤이 숨겨지고 사진 한 장으로 보인다.
-         data-autoplay="5000" 을 붙이면 5초마다 자동으로 넘어간다 (기본은 수동). -->
-    <figure class="w-photo r" data-slider aria-roledescription="carousel" aria-label="작품 사진">
-      <div class="w-track">
-        <picture class="w-slide">
-          <source srcset="img/work-01.webp" type="image/webp">
-          <img src="img/work-01.jpg" width="3000" height="4000"
-               alt="작품 사진 1 — 무엇이 보이는지 한 문장"
-               fetchpriority="high" decoding="async">
-        </picture>
-        <picture class="w-slide">
-          <source srcset="img/work-02.webp" type="image/webp">
-          <img src="img/work-02.jpg" width="3000" height="4000"
-               alt="작품 사진 2 — 무엇이 보이는지 한 문장"
-               loading="lazy" decoding="async">
-        </picture>
-        <picture class="w-slide">
-          <source srcset="img/work-03.webp" type="image/webp">
-          <img src="img/work-03.jpg" width="3000" height="4000"
-               alt="작품 사진 3 — 무엇이 보이는지 한 문장"
-               loading="lazy" decoding="async">
-        </picture>
-      </div>
-    </figure>
-
-    <figcaption class="w-cap r">
-      <p class="label label--muted">01 — Artwork</p>
-      <p class="cap-ko" lang="ko">
-        <span class="c-artist">작가명</span>
-        <span class="c-title">작품명<span class="c-year">(2026)</span></span>
-        <span class="c-mat">재료, 크기</span>
-      </p>
-      <p class="cap-en">Artist Name<span class="ce-sep" aria-hidden="true">·</span><em>Work Title</em><span class="ce-sep" aria-hidden="true">·</span>Materials, Dimensions</p>
-    </figcaption>
-
-    <div class="w-note r">
-      <button class="note-btn" type="button" data-note-go>
-        <span class="nb-bracket" aria-hidden="true">[</span>기획글 보기<span class="nb-bracket" aria-hidden="true">]</span>
-      </button>
-      <p class="wn-ko" lang="ko">작품을 한 줄로 설명하는 스테이트먼트.</p>
-    </div>
-
-
-  </section>
-
-  <!-- ══ 02 · 기획글 ═════════════════════════ -->
-  <section class="pg pg--note" id="p2" aria-labelledby="t-note">
-
-    <div class="note-head">
-      <p class="label label--muted">02 — Curatorial Note</p>
-      <h2 class="note-title" id="t-note" lang="ko">기획글</h2>
-    </div>
-
-    <div class="note-body" lang="ko">
-      <p>기획글 첫 문단. 문단마다 &lt;p&gt; 하나. 데스크톱에선 2단, 모바일에선 문단 단위로 넘어간다.</p>
-      <p>두 번째 문단.</p>
-      <p>세 번째 문단.</p>
-    </div>
-
-  </section>
-
-  <!-- ══ 03 · 영상 ═══════════════════════════ -->
-  <!-- data-youtube 에 유튜브 링크를 아무 형식으로나 넣는다:
-       watch?v=… / youtu.be/… / shorts/… / embed/… / 11자리 ID
-       비어 있으면 "준비 중" 자리표시자가 나온다. -->
-  <section class="pg pg--video" id="p3" aria-labelledby="t-video">
-
-    <p class="label label--muted r">03 — Video</p>
-
-    <div class="v-body">
-      <div class="v-frame r" data-youtube="" data-title="작품명 — 작가명"></div>
-
-      <div class="v-info r">
-        <h2 class="v-ko" id="t-video" lang="ko">작품 영상</h2>
-        <p class="v-desc" lang="ko">영상에 대한 한두 줄 설명.</p>
-        <p class="v-note" lang="ko">* 영상은 YouTube에서 재생됩니다.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ 04 · 전시 ═══════════════════════════ -->
-  <section class="pg pg--exh" id="p4" aria-labelledby="t-exh">
-
-    <p class="label label--muted r">04 — Exhibition</p>
-
-    <div class="exh-body">
-      <figure class="e-poster r">
-        <button class="poster-btn" type="button" aria-label="포스터 크게 보기" data-zoom>
-          <picture>
-            <source srcset="img/poster.webp" type="image/webp">
-            <img src="img/poster.jpg" width="1536" height="2048"
-                 alt="전시 포스터 — 작품명" loading="lazy" decoding="async">
-          </picture>
-        </button>
-        <p class="hint"><span class="hint--tap">포스터를 탭하면 확대</span><span class="hint--click">포스터를 클릭하면 확대</span></p>
-      </figure>
-
-      <div class="e-info">
-        <p class="e-kicker" lang="ko">GS칼텍스 예울마루 창작스튜디오</p>
-        <h2 class="e-ko" id="t-exh" lang="ko">N기 입주작가전<span class="us" aria-hidden="true">_</span>작가명<br><span class="nb">〈작품명〉</span></h2>
-
-        <dl class="spec r">
-          <div class="spec-row">
-            <dt><span class="label">Period</span><span class="ko" lang="ko">기간</span></dt>
-            <dd><span class="v">2026. 00. 00<span class="dow">Mon</span><span class="dash" aria-hidden="true">—</span>00. 00<span class="dow">Sun</span></span></dd>
-          </div>
-          <div class="spec-row">
-            <dt><span class="label">Hours</span><span class="ko" lang="ko">운영시간</span></dt>
-            <dd>
-              <span class="v">09:00<span class="dash" aria-hidden="true">—</span>22:00</span>
-              <span class="v-note" lang="ko">* 물때에 따라 변동 · 휴장 <a class="v-link" href="https://www.yeulmaru.org/community/v/1733/" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">[</span>장도 물때 확인<span aria-hidden="true">]</span></a></span>
-            </dd>
-          </div>
-          <div class="spec-row">
-            <dt><span class="label">Venue</span><span class="ko" lang="ko">장소</span></dt>
-            <dd><span class="v" lang="ko">GS칼텍스 예울마루, 장소</span></dd>
-          </div>
-        </dl>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ 05 · 작가 ═══════════════════════════ -->
-  <section class="pg pg--artist" id="p5" aria-labelledby="t-artist">
-
-    <p class="label label--muted r">05 — Artist</p>
-
-    <div class="a-body">
-      <figure class="a-photo r">
-        <picture>
-          <source srcset="img/artist.webp" type="image/webp">
-          <img src="img/artist.jpg" width="1333" height="2000"
-               alt="작가 작가명" loading="lazy" decoding="async">
-        </picture>
-      </figure>
-
-      <div class="a-info">
-        <h2 class="display a-name" id="t-artist">Artist&nbsp;Name</h2>
-        <p class="a-ko" lang="ko">작가명<span class="born">b.&nbsp;0000 · 장르</span></p>
-        <p class="a-stmt" lang="ko">작가 소개 한 줄.</p>
-        <ul class="a-cv" lang="ko">
-          <li>주요 이력 1</li>
-          <li>주요 이력 2</li>
-          <li>주요 이력 3</li>
-        </ul>
-      </div>
-    </div>
-
-    <footer class="site-foot">
-      <p class="wordmark">Creative Studio.</p>
-      <p class="foot-copy">(c) 2023-26. GS Caltex Yeulmaru. all rights reserved.</p>
-    </footer>
-  </section>
-
-</main>
-
-<!-- ── 포스터 확대 ─────────────────────────────── -->
 <dialog class="zoom" id="zoom" aria-label="포스터 확대 보기">
   <button class="zoom-close" type="button" aria-label="닫기" data-close>
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
   </button>
-  <picture>
-    <source srcset="img/poster.webp" type="image/webp">
-    <img src="img/poster.jpg" alt="전시 포스터 확대" loading="lazy" decoding="async">
-  </picture>
 </dialog>
 
-<script src="../assets/js/deck.js" defer></script>
+<script src="page.js"></script>
+<script src="/studio/assets/js/render.js" defer></script>
+<script src="/studio/assets/js/deck.js" defer></script>
 </body>
 </html>

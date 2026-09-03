@@ -18,26 +18,37 @@ QR 연결 전용 라벨 페이지. 작가마다 폴더 하나씩 복제해서 �
 
 전시 타이틀은 **좌상단 고정**(`.fixhead`, `mix-blend-mode: difference`)으로 5면 내내 노출된다.
 
+## 내용은 전부 `page.js` 하나에
+
+각 페이지 폴더의 `index.html` 은 빈 껍데기이고, **`page.js` 의 `window.PAGE` 객체**가 내용 전부다.
+`assets/js/render.js` 가 그 객체를 읽어 5면을 그린다. 그래서 HTML 을 만질 일이 없다.
+
+```js
+window.PAGE = {
+  series: "창작스튜디오 7기 입주작가",          // 좌상단 고정 타이틀 앞머리
+  work:  { title, titleEn, year, material, materialEn, statement, autoplay, images: [ {src, webp, alt}, … ] },
+  note:  { title, button, paragraphs: [ "…", "…" ] },
+  video: { youtube: "https://www.youtube.com/watch?v=…", title, description, note },
+  exhibition: { kicker, title, subtitle, poster: {src, webp, alt}, spec: [ {label, ko, value, note, link:{text,url}} ] },
+  artist: { name, nameEn, born, genre, photo: {src, webp, alt}, statement, cv: [ "…" ] },
+  footer: { wordmark, copy }
+};
+```
+
+- 비워 둔 항목은 화면에서 자동으로 빠진다 (예: `video.youtube` 비우면 "coming soon", `images` 한 장이면 슬라이더 컨트롤 숨김).
+- `title` 의 `" : "` 는 흐린 콜론으로, `exhibition.title` 의 `_` 는 흐린 밑줄로, `spec.value` 의 `—` 와 요일(`Tue`)은 자동 장식된다.
+- `youtube` 는 `watch?v=` / `youtu.be/` / `shorts/` / 11자리 ID 어떤 형식이든 된다.
+- 이미지 경로는 그 페이지 폴더 기준 (`img/…`). `webp` 는 있을 때만 적는다.
+
 ## 새 작가 페이지 만들기
 
-1. `_template/` 폴더를 복사해서 슬러그 이름으로 바꾼다. 예: `kim-xx/`
-   (영문 소문자·하이픈. 이 이름이 URL이 된다: `/studio/kim-xx/`)
-2. `kim-xx/img/` 에 이미지를 넣는다. 파일명은 그대로 맞춘다.
-   - `work-01.jpg` + `work-01.webp`, `work-02.*`, `work-03.*` … 작품 사진 (슬라이더 순서 = 번호 순서)
-   - `poster.jpg` + `poster.webp` 포스터
-   - `artist.jpg` + `artist.webp` 작가 사진
-   - webp 가 없으면 `<source srcset=…webp>` 줄을 지우면 된다. jpg 만으로도 동작.
-3. `kim-xx/index.html` 을 열어 **한글 자리표시자만** 바꾼다.
-   - `<head>` 의 `<title>`, `description`, `og:*`
-   - 좌상단 고정 타이틀 `.fixhead`
-   - 01면: 슬라이드 `<picture class="w-slide">` 블록을 사진 수만큼 남기거나 늘린다. 한 장이면 컨트롤이 자동으로 숨는다.
-     자동 넘김을 원하면 `<figure class="w-photo r" data-slider data-autoplay="5000">`
-   - 03면: `data-youtube="…"` 에 유튜브 링크. `watch?v=` / `youtu.be/` / `shorts/` / 11자리 ID 아무거나.
-     비워 두면 "Video — coming soon" 자리표시자.
-   - 04면 기간·시간·장소, 05면 작가 정보
-4. 커밋 → push. 1~2분 뒤 `https://yeulmaru.github.io/studio/kim-xx/` 에 뜬다.
+1. `_template/` 폴더를 복사해서 이름을 바꾼다. 예: `2/` → URL 은 `https://yeulmaru.github.io/studio/2/`
+   (영문·숫자·하이픈만. `kim-xx/` 처럼 슬러그도 됨)
+2. `2/img/` 에 사진을 넣는다 (작품 여러 장, 포스터, 작가 사진).
+3. `2/page.js` 의 값을 채운다. 위 구조 그대로, 한글 자리표시자만 바꾸면 된다.
+4. 커밋 → push. 1~2분 뒤 반영.
 
-루트 `index.html`(안민환)도 같은 구조라서 같은 방법으로 고친다. 단 자산 경로가 `assets/…` (하위 폴더는 `../assets/…`).
+루트(`/studio/`)도 같은 구조다: `page.js` 가 안민환 페이지 내용이고 `img/` 에 그 사진이 있다.
 
 ## 스크롤 모션
 
@@ -52,16 +63,17 @@ QR 연결 전용 라벨 페이지. 작가마다 폴더 하나씩 복제해서 �
 ## 구조
 
 ```
-index.html                 7기 안민환 라벨 페이지 (루트)
-_template/index.html       새 작가용 틀 — 폴더째 복사해서 쓴다
-_template/img/             작품·포스터·작가 사진 자리
+index.html                 껍데기 (모든 페이지 동일 — 손대지 않음)
+page.js                    루트 페이지(7기 안민환) 내용
+img/                       루트 페이지 사진
+_template/                 새 작가용 틀 — 폴더째 복사 (index.html · page.js · img/)
 404.html                   모든 경로 → /studio/ 로 리다이렉트
 assets/css/tokens.css      디자인 토큰 (muteno/creative 와 동일)
 assets/css/fonts.css       Anton / Jost @font-face
 assets/css/label.css       페이지 스타일 (5면 공통)
+assets/js/render.js        window.PAGE → 5면 마크업
 assets/js/deck.js          5면 스크롤 제어 · 리빌 · 01 슬라이더 · 03 유튜브 · 포스터 확대
 assets/fonts/              자체 호스팅 폰트 (Anton, Jost, Pretendard Variable)
-assets/img/                루트(안민환) 페이지 이미지
 ```
 
 ## 표기 원칙
@@ -74,6 +86,16 @@ assets/img/                루트(안민환) 페이지 이미지
 `muteno/creative` 의 `DESIGN.md` — Paper & Ink 모노크롬, Anton / Jost / Pretendard 3서체,
 값은 전부 `tokens.css` 변수. 새 색·크기를 임의로 추가하지 않는다.
 영문 강조는 이탤릭 대신 **Anton 아웃라인**(`-webkit-text-stroke`)으로 통일 — 자체 호스팅 폰트에 이탤릭 자족이 없기 때문.
+
+## 로컬에서 보기
+
+자산 경로가 `/studio/assets/…` 절대경로라서, 리포 **상위 폴더**에서 서버를 띄우고 `/studio/` 로 연다.
+
+```
+cd ..   # studio 의 부모
+python3 -m http.server 8000
+# → http://localhost:8000/studio/
+```
 
 ## 배포
 
