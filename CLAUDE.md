@@ -60,7 +60,8 @@ GitHub Pages 프로젝트 사이트라서 URL 은 `https://yeulmaru.github.io/st
 - **작가 사진(05면)**: `artist.photo`. 비율 무관, 세로 2:3 이 가장 자연스럽다.
 - 파일 형식: jpg 또는 png. 장당 1MB 이하 권장(폰에서 열리는 페이지다). webp 는 있으면 `webp:` 에 같이 적고, 없으면 그 키를 빼면 된다.
 - `width`/`height` 는 선택. 적으면 로딩 중 레이아웃이 안 흔들린다.
-- `*-original.*` 은 원본 보관용. 웹에서 쓰지 않는다.
+- `img/original/` 은 원본 보관용. 웹에서 쓰지 않는다. 사용자가 올린 원본(한글 파일명, 2MB 안팎)은 여기로 옮기고, 웹용은 긴 변 1600px · jpg q82 + webp 로 줄여 `work-01.jpg` 식으로 이름 붙인다 (Pillow 로 처리).
+- 가로 사진은 `width`/`height` 를 적어 두면 render.js 가 자동으로 잘리지 않게(contain) 표시한다. 세로 사진은 꽉 채움(cover). `fit: "contain"|"cover"` 로 직접 지정도 가능.
 
 ### 새 작가 페이지 만들기
 1. `_template/` 를 통째로 복사해서 이름을 바꾼다. 예: `2/`

@@ -17,9 +17,21 @@ window.PAGE = {
     materialEn: "Soil, Grass, Dimensions variable",
     statement: "땅의 표면을 들어 올려, 풍경이 딛고 있던 토대를 드러낸다.",
     autoplay: 0,                                   // ms. 0 이면 수동. 예: 5000
-    images: [                                      // 순서대로 슬라이드. 한 장이면 컨트롤 숨김
+    images: [                                      // 순서대로 슬라이드. 가로 사진은 자동으로 잘리지 않게(contain) 표시
       { src: "img/work.jpg", webp: "img/work.webp", width: 3000, height: 4000,
-        alt: "잔디밭의 흙과 잔디 층을 들어 올려 흰 기둥으로 받쳐 세운 안민환의 야외 설치 작품" }
+        alt: "잔디밭의 흙과 잔디 층을 들어 올려 흰 기둥으로 받쳐 세운 안민환의 야외 설치 작품" },
+      { src: "img/work-01.jpg", webp: "img/work-01.webp", width: 1600, height: 1078, alt: "잔디밭 위 흙·잔디 조각들을 위에서 내려다본 항공 사진" },
+      { src: "img/work-02.jpg", webp: "img/work-02.webp", width: 1600, height: 1066, alt: "잔디광장에 아치 형태로 들어 올려진 흙·잔디 조각들" },
+      { src: "img/work-03.jpg", webp: "img/work-03.webp", width: 1600, height: 1198, alt: "푸른 하늘 아래 흩어진 아치형 풍경조각" },
+      { src: "img/work-04.jpg", webp: "img/work-04.webp", width: 1600, height: 1066, alt: "장도 잔디광장 전경과 풍경조각 설치 모습" },
+      { src: "img/work-05.jpg", webp: "img/work-05.webp", width: 1600, height: 1066, alt: "풍경조각 여러 점이 이어진 잔디광장" },
+      { src: "img/work-06.jpg", webp: "img/work-06.webp", width: 1600, height: 1066, alt: "아치 아래로 뒤편 풍경이 비치는 설치 전경" },
+      { src: "img/work-07.jpg", webp: "img/work-07.webp", width: 1600, height: 1066, alt: "들어 올린 잔디층 아치 근접" },
+      { src: "img/work-08.jpg", webp: "img/work-08.webp", width: 1600, height: 1066, alt: "하늘을 향해 솟은 아치형 풍경조각" },
+      { src: "img/work-09.jpg", webp: "img/work-09.webp", width: 1600, height: 1066, alt: "흙과 잔디 단면 디테일" },
+      { src: "img/work-10.jpg", webp: "img/work-10.webp", width: 1600, height: 1066, alt: "흰 기둥으로 받쳐 세운 흙·잔디 조각" },
+      { src: "img/work-11.jpg", webp: "img/work-11.webp", width: 1600, height: 1066, alt: "기울어져 솟은 잔디 조각의 측면" },
+      { src: "img/work-12.jpg", webp: "img/work-12.webp", width: 1600, height: 1066, alt: "나무 그늘 앞에 세워진 풍경조각" }
     ]
   },
 

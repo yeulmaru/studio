@@ -73,7 +73,9 @@
   var slides = list(images, function (im, i) {
     if (typeof im === "string") im = { src: im };
     var attrs = i === 0 ? ' fetchpriority="high"' : ' loading="lazy"';
-    return pic(im, attrs).replace("<picture>", '<picture class="w-slide">');
+    /* 가로 사진(width > height)은 잘라내지 않고 통째로 보여준다 (contain). fit: "cover"|"contain" 으로 직접 지정도 가능 */
+    var fit = im.fit || (im.width && im.height && im.width > im.height ? "contain" : "cover");
+    return pic(im, attrs).replace("<picture>", '<picture class="w-slide w-slide--' + fit + '">');
   });
   var work =
     '<section class="pg pg--work" id="p1" aria-label="작품">' +
