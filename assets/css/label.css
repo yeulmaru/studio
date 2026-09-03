@@ -1,6 +1,6 @@
 /* ═════════════════════════════════════════════
-   ARTWORK LABEL — 3페이지 스크롤 (모바일 우선)
-   01 작품 · 02 전시 · 03 작가
+   ARTWORK LABEL — 5페이지 스크롤 (모바일 우선)
+   01 작품(슬라이더) · 02 기획글 · 03 영상 · 04 전시 · 05 작가
    규칙: creative/DESIGN.md · 값은 tokens.css 변수만 사용
    ═════════════════════════════════════════════ */
 
@@ -344,7 +344,119 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
 .cap-en em { font-style: normal; color: var(--ink-soft); font-weight: 600; }
 .cap-en .ce-sep { padding-inline: 0.45em; opacity: 0.55; }
 
-/* ══ 02 · 전시 ═══════════════════════════════ */
+
+/* ── 01 작품 사진 슬라이더 ─────────────────────
+   .w-photo 안에 .w-track > .w-slide(picture) 를 가로로 나열한다.
+   한 장이면 컨트롤 없음. 사진 규칙(폭 100% · cover)은 그대로 계승. */
+.w-photo { position: relative; overflow: hidden; touch-action: pan-y; }
+.w-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.7s var(--ease-inout);
+  will-change: transform;
+}
+.w-slide { flex: 0 0 100%; min-width: 0; height: 100%; }
+.w-slide img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 56%; }
+@media (min-width: 901px) and (min-aspect-ratio: 1/1) {
+  .w-slide img { object-fit: contain; object-position: 50% 50%; }
+}
+@media (prefers-reduced-motion: reduce) { .w-track { transition: none; } }
+
+/* 컨트롤 — 사진 위 우하단. 잉크/종이 반전(difference)으로 어떤 사진 위에서도 읽힌다 */
+.w-ctl {
+  position: absolute;
+  right: var(--pad);
+  bottom: clamp(12px, 2.4vh, 22px);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  mix-blend-mode: difference;
+  color: #f4f1ea;
+}
+.w-ctl button {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(244, 241, 234, 0.7);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.w-ctl button:hover { background: #f4f1ea; color: #141311; }
+.w-ctl button svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.w-count {
+  font-family: var(--font-label);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label-tight);
+  padding-inline: 8px 6px;
+  font-variant-numeric: tabular-nums;
+}
+@media (min-width: 901px) and (min-aspect-ratio: 1/1) {
+  .w-ctl { right: clamp(12px, 1.4vw, 24px); }
+}
+
+/* ══ 03 · 영상 ═══════════════════════════════ */
+.v-body { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; justify-content: center; gap: clamp(14px, 2.4vh, 26px); }
+
+.v-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 62dvh;
+  margin-inline: calc(var(--pad) * -1);
+  width: calc(100% + var(--pad) * 2);
+  background: var(--paper-2);
+  overflow: hidden;
+}
+.v-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.v-frame .v-empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-family: var(--font-label);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+}
+
+.v-info { display: grid; gap: 6px; }
+.v-ko {
+  font-size: clamp(17px, 5.2vw, 30px);
+  font-weight: 700;
+  line-height: 1.28;
+  letter-spacing: -0.035em;
+}
+.v-desc {
+  font-size: clamp(13.5px, 3.6vw, 17px);
+  color: var(--ink-soft);
+  line-height: 1.55;
+  letter-spacing: -0.02em;
+  text-wrap: pretty;
+}
+.v-note { font-size: clamp(10px, 2.6vw, 12px); color: var(--muted); letter-spacing: -0.01em; }
+.v-link {
+  justify-self: start;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: clamp(13px, 3.4vw, 16px);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line-strong);
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.v-link:hover { background: var(--ink); color: var(--paper); }
+.v-link .nb-bracket { color: var(--muted); padding-inline: 1px; }
+
+@media (min-width: 901px) and (min-aspect-ratio: 1/1) {
+  .v-body { flex-direction: row; align-items: center; gap: var(--gap-lg); }
+  .v-frame { flex: 0 0 62%; margin-inline: 0; width: auto; max-height: none; }
+  .v-info { flex: 1 1 auto; align-content: center; }
+}
+
+/* ══ 04 · 전시 ═══════════════════════════════ */
 .exh-body { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; gap: clamp(14px, 2.4vh, 26px); min-height: 0; }
 
 .e-poster { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; align-items: center; gap: clamp(6px, 1.1vh, 12px); }
@@ -456,7 +568,7 @@ html.snap-off { scroll-snap-type: none; scroll-behavior: auto; }
   .hint--click { display: inline; }
 }
 
-/* ══ 03 · 작가 ═══════════════════════════════ */
+/* ══ 05 · 작가 ═══════════════════════════════ */
 .a-body { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; gap: clamp(12px, 2.2vh, 22px); min-height: 0; }
 
 .a-photo {
