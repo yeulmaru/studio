@@ -16,7 +16,7 @@ window.PAGE = {
     material: "흙, 잔디, 가변설치",
     materialEn: "Soil, Grass, Dimensions variable",
     statement: "땅의 표면을 들어 올려, 풍경이 딛고 있던 토대를 드러낸다.",
-    autoplay: 0,                                   // ms. 0 이면 수동. 예: 5000
+    autoplay: 5000,                                // ms 간격으로 자동 넘김. 0 이면 손으로만 넘김
     images: [                                      // 순서대로 슬라이드. 가로 사진은 자동으로 잘리지 않게(contain) 표시
       { src: "img/work.jpg", webp: "img/work.webp", width: 3000, height: 4000,
         alt: "잔디밭의 흙과 잔디 층을 들어 올려 흰 기둥으로 받쳐 세운 안민환의 야외 설치 작품" },
