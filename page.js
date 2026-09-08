@@ -50,7 +50,7 @@ window.PAGE = {
 
   /* ── 03 영상 ── */
   video: {
-    youtube: "https://www.youtube.com/watch?v=-onQljHv9NY",   // watch / youtu.be / shorts / 11자리 ID 모두 OK. 비우면 "coming soon"
+    youtube: "https://youtu.be/Or6PR2CKh6o",   // watch / youtu.be / shorts / 11자리 ID 모두 OK. 비우면 "coming soon"
     title: "작가 인터뷰",
     description: "창작스튜디오 7기 입주작가 안민환 인터뷰. 〈풍경조각 : 토대를 까는 일〉이 시작된 자리에 대해.",
     note: "* 영상은 YouTube에서 재생됩니다."
